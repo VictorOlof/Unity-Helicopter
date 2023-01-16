@@ -4,16 +4,16 @@ using UnityEngine;
 
 /// <summary>
 /// Handles heights and movements between the child objects bottomLine and topLine.
-/// Continuously checks if gameObjects goes outside camera and calls generation scripts.
+/// Continuously checks if gameObjects goes outside camera and calls Controller scripts.
 /// </summary>
-public class LinePart : MonoBehaviour
+public class Line : MonoBehaviour
 {
     private GameObject bottomLine, topLine;
     private int maxTunnelHeight = 12;
     private double currentTunnelHeight = 0;
     
     GameObject cameraGameObject;
-    Generation generationScript;
+    Controller controllerScript;
 
  
     void Awake()
@@ -21,6 +21,8 @@ public class LinePart : MonoBehaviour
         cameraGameObject = GameObject.Find("Main Camera");
         bottomLine = gameObject.transform.GetChild(0).gameObject;
         topLine = gameObject.transform.GetChild(1).gameObject;
+
+        // TODO init maxTunnelHeight etc. from GameController here
     }
 
     void OnEnable() 
@@ -38,8 +40,8 @@ public class LinePart : MonoBehaviour
 
     void Start()
     {
-        GameObject generationGameObject = GameObject.Find("Generation");
-        generationScript = (Generation)generationGameObject.GetComponent(typeof(Generation));
+        GameObject controllerGameObject = GameObject.Find("Controller");
+        controllerScript = (Controller)controllerGameObject.GetComponent(typeof(Controller));
     }
 
     void StartLineMovement()
@@ -52,7 +54,7 @@ public class LinePart : MonoBehaviour
         if (CheckIfOutside())
         {
             gameObject.SetActive(false);
-            generationScript.SpawnNewLine();
+            controllerScript.SpawnNewLine();
         }
     }
 

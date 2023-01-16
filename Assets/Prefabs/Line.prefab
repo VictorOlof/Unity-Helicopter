@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3728485301527423162}
-  - component: {fileID: 2688053291117205798}
+  - component: {fileID: 3480487017973875506}
   m_Layer: 0
-  m_Name: LinePart
+  m_Name: Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2688053291117205798
+--- !u!114 &3480487017973875506
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3120204882587012292}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f145bc0ae0d9e4b2aadfe026486b03cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b4f402078c44460a9699e1027622588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5329648983192322349
@@ -93,6 +93,7 @@ MonoBehaviour:
   grass: {fileID: 3483298675060914152, guid: ba57dcfb70a3f4231b4eadc05775a2cc, type: 3}
   dirt: {fileID: 3483298675060914152, guid: ba57dcfb70a3f4231b4eadc05775a2cc, type: 3}
   stone: {fileID: 3483298675060914152, guid: ba57dcfb70a3f4231b4eadc05775a2cc, type: 3}
+  lineHeight: 27
 --- !u!1 &6584232829895341609
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,3 +139,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stone: {fileID: 3483298675060914152, guid: ba57dcfb70a3f4231b4eadc05775a2cc, type: 3}
+  lineHeight: 27
