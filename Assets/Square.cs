@@ -5,17 +5,31 @@ using UnityEngine;
 public class Square : MonoBehaviour
 {
     SpriteRenderer Renderer;
-
+    
     void Start()
     {
         //Fetch the SpriteRenderer from the GameObject
         Renderer = GetComponent<SpriteRenderer>();
 
-        Controller.GetInstance().GameModeEvent += ChangeColor;
+        //Controller.GetInstance().GameModeEvent += ChangeColor;
+        //InvokeRepeating("ChangeToRandomColor", 0.1f, 0.1f);
     }
 
-    void ChangeColor(object sender, System.EventArgs e)
+    /*
+    void ChangeToRandomColor()
     {
-        Renderer.color = new Color(0f, 0f, 0f, 1f);
+        bool colorBlack = true;
+        if (colorBlack)
+        {
+            Renderer.color = new Color(171, 79, 0, 0); //Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+            colorBlack = false;
+        }
+        else
+        {
+            Renderer.color = Color.black;
+            colorBlack = true;
+        }
+        
     }
+    */
 }
