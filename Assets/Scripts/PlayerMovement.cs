@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public GameOverScreen gameOverScreen;
     [SerializeField] float upForce = 14f;
     [SerializeField] float speed = 14f;
-
     [SerializeField] float tiltSpeed;
     Vector3 currentEulerAngles;
 

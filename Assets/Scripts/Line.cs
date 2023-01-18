@@ -27,7 +27,16 @@ public class Line : MonoBehaviour
 
     void OnEnable() 
     {
-        Invoke("StartLineMovement", 1);
+        bool startEven = true;
+        if (startEven)
+        {
+            topLine.transform.position    = new Vector2(topLine.transform.position.x,       (float) topLine.transform.position.y + (float) 6.0);
+            bottomLine.transform.position = new Vector2(bottomLine.transform.position.x,    (float) bottomLine.transform.position.y - (float) 6.0);
+        }
+        else
+        {
+            Invoke("StartLineMovement", 1);   
+        }
     }
 
     void OnDisable() 
@@ -51,14 +60,14 @@ public class Line : MonoBehaviour
 
     void Update()
     {
-        if (CheckIfOutside())
+        if (IfOutsideCameraLeft())
         {
             gameObject.SetActive(false);
             controllerScript.SpawnNewLine();
         }
     }
 
-    bool CheckIfOutside()
+    bool IfOutsideCameraLeft()
     {
         // TODO: Check if outside camera to left TODO: instead of -25, subtract half camera size
         return (transform.position.x <= cameraGameObject.transform.position.x - 25);
@@ -72,14 +81,5 @@ public class Line : MonoBehaviour
             topLine.transform.position    = new Vector2(topLine.transform.position.x,       (float) topLine.transform.position.y + (float) 0.05);
             bottomLine.transform.position = new Vector2(bottomLine.transform.position.x,    (float) bottomLine.transform.position.y - (float) 0.05);
         }
-    }
-
-    public void SetTunnelHeight(int height)
-    {
-        // Set tunnel height
-        //topLine.transform.position = new Vector2(topLine.transform.position.x, bottomLine.transform.position.y + height);
-        
-        currentTunnelHeight = 0;
-        maxTunnelHeight = height;
     }
 }

@@ -15,7 +15,18 @@ public class Square : MonoBehaviour
         //InvokeRepeating("ChangeToRandomColor", 0.1f, 0.1f);
     }
 
-    /*
+    void OnEnable()
+    {
+        //Controller.OnClicked += ChangeToRandomColor;
+    }
+
+
+    void OnDisable()
+    {
+        //Controller.OnClicked -= ChangeToRandomColor;
+    }
+
+    
     void ChangeToRandomColor()
     {
         bool colorBlack = true;
@@ -31,5 +42,5 @@ public class Square : MonoBehaviour
         }
         
     }
-    */
+    
 }

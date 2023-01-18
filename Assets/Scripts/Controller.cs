@@ -15,36 +15,33 @@ public class Controller : MonoBehaviour
     private Vector2 latestSpawnedLinePosition;
     private int newHeight = 0;
 
-    private static Controller instance;
-    public static Controller GetInstance() 
-    {
-        return instance;
-    }
-    public event EventHandler GameModeEvent;
-
     enum GameMode
     {
-        Normal,
-        Enemy,
-        LowerTunnel
+        Start,
+        LowTunnel,
+        HighTunnel
     }
-    GameMode currentGameMode = GameMode.Normal;
+    GameMode currentGameMode;
+
+    //public delegate void ClickAction();
+    //public static event ClickAction OnClicked;
 
     void Awake()
     {
-        instance = this;
+        currentGameMode = GameMode.Start;
     }
     
     void Start()
     {
         SpawnStartLines();
-        InvokeRepeating("ChangeToRandomGameMode", 5.0f, 5.0f);
+        InvokeRepeating("ChangeToRandomGameMode", 1.0f, 1.0f);
     }
 
     void ChangeToRandomGameMode()
     {
         currentGameMode = (GameMode)UnityEngine.Random.Range(0, Enum.GetNames(typeof(GameMode)).Length);
-        if (GameModeEvent != null) GameModeEvent(this, EventArgs.Empty);
+        //if(OnClicked != null)
+        //    OnClicked();
     }
 
     void SpawnStartLines()
