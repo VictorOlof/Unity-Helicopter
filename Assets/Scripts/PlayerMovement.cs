@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float upForce = 14f;
     [SerializeField] float speed = 14f;
     [SerializeField] float tiltSpeed;
+
+    [SerializeField] private Slider speedSlider;
+    [SerializeField] private TextMeshProUGUI speedTxt;
+
+    [SerializeField] private Slider upForceSlider;
+    [SerializeField] private TextMeshProUGUI upForceTxt;
+
     Vector3 currentEulerAngles;
 
     private Rigidbody2D rb;
@@ -18,6 +27,13 @@ public class PlayerMovement : MonoBehaviour
         Playing,
         Dead
     }
+
+    private bool up = false;
+
+    public float radius = 5.0F;
+    public float power = 10.0F;
+
+    
 
     void Awake()
     {
@@ -34,8 +50,65 @@ public class PlayerMovement : MonoBehaviour
             case State.Playing:
                 tiltSprite();
                 smokeParticles();
+                
+
+                if (TestInput())
+                {
+                    if (!up) 
+                    {
+                        SoundManager.Instance.PlaySoundUp();
+                        Debug.Log("up");
+                    }
+                    up = true;
+                }
+                else 
+                {
+                    if (up) 
+                    {
+                        SoundManager.Instance.PlaySoundDown();
+                        Debug.Log("down");
+                    }
+                    up = false;
+                }
+
+                
+
                 break;
         }
+
+        
+
+        //Debug.Log(mySlider.value);
+        //upForce = mySlider.value;
+    }
+
+    void Start() {
+        speedSlider.onValueChanged.AddListener((v) => {
+            speedTxt.text = v.ToString("0");
+            speed = v;
+        });
+
+        upForceSlider.onValueChanged.AddListener((v) => {
+            upForceTxt.text = v.ToString("0");
+            upForce = v;
+        });
+
+        Vector3 explosionPos = transform.position;
+        Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+        foreach (Collider hit in colliders)
+        {
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+
+            if (rb != null)
+                rb.AddExplosionForce(power, explosionPos, radius, 3.0F);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        Debug.Log("OnCollisionEnter2D");
+
+        
     }
 
     private void FixedUpdate()
@@ -56,6 +129,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     Jump();
                 }
+
                 // Move right continuously 
                 transform.position += new Vector3(speed * Time.deltaTime, 0);
                 break;
@@ -79,10 +153,6 @@ public class PlayerMovement : MonoBehaviour
             Input.touchCount > 0;
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        //gameOverScreen.Setup((int)transform.position.x);
-    }
 
     private void tiltSprite()
     {

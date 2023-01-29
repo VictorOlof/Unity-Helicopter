@@ -27,7 +27,7 @@ public class Line : MonoBehaviour
 
     void OnEnable() 
     {
-        bool startEven = true;
+        bool startEven = false;
         if (startEven)
         {
             topLine.transform.position    = new Vector2(topLine.transform.position.x,       (float) topLine.transform.position.y + (float) 6.0);

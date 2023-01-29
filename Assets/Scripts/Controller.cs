@@ -35,6 +35,7 @@ public class Controller : MonoBehaviour
     {
         SpawnStartLines();
         InvokeRepeating("ChangeToRandomGameMode", 1.0f, 1.0f);
+        Application.targetFrameRate = 60;
     }
 
     void ChangeToRandomGameMode()
