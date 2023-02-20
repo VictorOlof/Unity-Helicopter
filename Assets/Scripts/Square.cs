@@ -12,7 +12,7 @@ public class Square : MonoBehaviour
         Renderer = GetComponent<SpriteRenderer>();
 
         //Controller.GetInstance().GameModeEvent += ChangeColor;
-        //InvokeRepeating("ChangeToRandomColor", 0.1f, 0.1f);
+        //InvokeRepeating("ChangeToRandomColor", 0.1f, 0.25f);
     }
 
     void OnEnable()
@@ -32,7 +32,8 @@ public class Square : MonoBehaviour
         bool colorBlack = true;
         if (colorBlack)
         {
-            Renderer.color = new Color(171, 79, 0, 0); //Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+            Renderer.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f); 
+            // orange or transparent new Color(171, 79, 0, 0); 
             colorBlack = false;
         }
         else

@@ -9,33 +9,40 @@ using UnityEngine;
 public class Line : MonoBehaviour
 {
     private GameObject bottomLine, topLine;
-    private int maxTunnelHeight = 12;
-    private double currentTunnelHeight = 0;
-    
+    private int tunnelGapHeight = 12;
+    private double currentTunnelGapHeight = 0;
+    public bool lineMovement = true;
+
     GameObject cameraGameObject;
     Controller controllerScript;
+    [SerializeField] GameObject playerMovement;
 
- 
+
     void Awake()
     {
         cameraGameObject = GameObject.Find("Main Camera");
         bottomLine = gameObject.transform.GetChild(0).gameObject;
         topLine = gameObject.transform.GetChild(1).gameObject;
 
-        // TODO init maxTunnelHeight etc. from GameController here
+        // TODO init tunnelGapHeight etc. from GameController here
+
+        GameObject controllerGameObject = GameObject.Find("Controller");
+        controllerScript = (Controller)controllerGameObject.GetComponent(typeof(Controller));
     }
 
     void OnEnable() 
     {
-        bool startEven = false;
-        if (startEven)
+        // TODO - check for state in playermonement / event
+        
+
+        if (lineMovement)
         {
-            topLine.transform.position    = new Vector2(topLine.transform.position.x,       (float) topLine.transform.position.y + (float) 6.0);
-            bottomLine.transform.position = new Vector2(bottomLine.transform.position.x,    (float) bottomLine.transform.position.y - (float) 6.0);
+            InvokeRepeating("MoveLines", 0.025f, 0.025f);  
         }
         else
         {
-            Invoke("StartLineMovement", 1);   
+            topLine.transform.position    = new Vector2(topLine.transform.position.x,       (float) topLine.transform.position.y + (float) 6.0);
+            bottomLine.transform.position = new Vector2(bottomLine.transform.position.x,    (float) bottomLine.transform.position.y - (float) 6.0);
         }
     }
 
@@ -44,18 +51,7 @@ public class Line : MonoBehaviour
         CancelInvoke("MoveLines");
         bottomLine.transform.position = new Vector2(bottomLine.transform.position.x, 0);
         topLine.transform.position    = new Vector2(topLine.transform.position.x,    0);
-        currentTunnelHeight = 0;
-    }
-
-    void Start()
-    {
-        GameObject controllerGameObject = GameObject.Find("Controller");
-        controllerScript = (Controller)controllerGameObject.GetComponent(typeof(Controller));
-    }
-
-    void StartLineMovement()
-    {
-        InvokeRepeating("MoveLines", 0.025f, 0.025f);
+        currentTunnelGapHeight = 0;
     }
 
     void Update()
@@ -74,9 +70,9 @@ public class Line : MonoBehaviour
     }
 
     void MoveLines() {
-        if (currentTunnelHeight < maxTunnelHeight)
+        if (currentTunnelGapHeight < tunnelGapHeight)
         {
-            currentTunnelHeight += 0.1;
+            currentTunnelGapHeight += 0.1;
             
             topLine.transform.position    = new Vector2(topLine.transform.position.x,       (float) topLine.transform.position.y + (float) 0.05);
             bottomLine.transform.position = new Vector2(bottomLine.transform.position.x,    (float) bottomLine.transform.position.y - (float) 0.05);

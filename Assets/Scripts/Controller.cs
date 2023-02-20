@@ -9,8 +9,7 @@ public class Controller : MonoBehaviour
 {
     [SerializeField] int tunnelWidth, tunnelHeight;
     [SerializeField] int maxHeightChange = 2;
-    [SerializeField] GameObject line;
-    [SerializeField] GameObject lineParent;
+    [SerializeField] GameObject line,lineParent;
     
     private Vector2 latestSpawnedLinePosition;
     private int newHeight = 0;
@@ -56,6 +55,9 @@ public class Controller : MonoBehaviour
             latestSpawnedLinePosition = new Vector2(x, newHeight);
             // Spawn 1 new line 
             GameObject newline = SpawnLineObj(latestSpawnedLinePosition);
+            
+            Line lineScript = (Line)newline.GetComponent(typeof(Line));
+            lineScript.lineMovement = true;
         }
     }
 

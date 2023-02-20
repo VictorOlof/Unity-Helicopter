@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float upForce = 14f;
     [SerializeField] float speed = 14f;
     [SerializeField] float tiltSpeed;
+
+    // Explosions
+    Collider2D[] inExplosionRadius = null;
+    [SerializeField] private float ExplosionForceMulti = 5;
+    [SerializeField] private float ExplosionRadius = 5;
 
     [SerializeField] private Slider speedSlider;
     [SerializeField] private TextMeshProUGUI speedTxt;
@@ -20,20 +26,16 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    private State state;
-    private enum State
+    public State state;
+    public enum State
     {
         WaitingToStart,
         Playing,
+        Crashed,
         Dead
     }
 
-    private bool up = false;
-
-    public float radius = 5.0F;
-    public float power = 10.0F;
-
-    
+    private bool movingUpwards = false;
 
     void Awake()
     {
@@ -46,43 +48,48 @@ public class PlayerMovement : MonoBehaviour
     {
         switch (state)
         {
-            default:
             case State.Playing:
-                tiltSprite();
-                smokeParticles();
-                
-
-                if (TestInput())
-                {
-                    if (!up) 
-                    {
-                        SoundManager.Instance.PlaySoundUp();
-                        Debug.Log("up");
-                    }
-                    up = true;
-                }
-                else 
-                {
-                    if (up) 
-                    {
-                        SoundManager.Instance.PlaySoundDown();
-                        Debug.Log("down");
-                    }
-                    up = false;
-                }
-
-                
-
+                TiltSprite();
+                SmokeParticles();
                 break;
         }
+    }
 
-        
+    void FixedUpdate()
+    {
+        switch (state)
+        {
+            case State.WaitingToStart:
+                if (TouchInput())
+                {
+                    state = State.Playing;
+                    rb.bodyType = RigidbodyType2D.Dynamic;
+                }
+                break;
 
-        //Debug.Log(mySlider.value);
-        //upForce = mySlider.value;
+            case State.Playing:
+                if (TouchInput())
+                {
+                    Jump();
+                }
+                PlayHelicopterSound();
+                // Move right continuously 
+                transform.position += new Vector3(speed * Time.deltaTime, 0);
+                break;
+
+            case State.Crashed:
+                Explode();
+                state = State.Dead;
+                break;
+
+            case State.Dead:
+                Invoke("LoadNewGame", (float)2);
+                break;
+        }
     }
 
     void Start() {
+        /*
         speedSlider.onValueChanged.AddListener((v) => {
             speedTxt.text = v.ToString("0");
             speed = v;
@@ -92,50 +99,27 @@ public class PlayerMovement : MonoBehaviour
             upForceTxt.text = v.ToString("0");
             upForce = v;
         });
+        */
+    }
 
-        Vector3 explosionPos = transform.position;
-        Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
-        foreach (Collider hit in colliders)
+    void PlayHelicopterSound()
+    {
+        // Play sound
+        if (TouchInput())
         {
-            Rigidbody rb = hit.GetComponent<Rigidbody>();
-
-            if (rb != null)
-                rb.AddExplosionForce(power, explosionPos, radius, 3.0F);
+            if (!movingUpwards) 
+            {
+                SoundManager.Instance.PlaySoundUp();
+            }
+            movingUpwards = true;
         }
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        Debug.Log("OnCollisionEnter2D");
-
-        
-    }
-
-    private void FixedUpdate()
-    {
-        switch (state)
+        else 
         {
-            default:
-            case State.WaitingToStart:
-                if (TestInput())
-                {
-                    state = State.Playing;
-                    rb.bodyType = RigidbodyType2D.Dynamic;
-                }
-                break;
-
-            case State.Playing:
-                if (TestInput())
-                {
-                    Jump();
-                }
-
-                // Move right continuously 
-                transform.position += new Vector3(speed * Time.deltaTime, 0);
-                break;
-
-            case State.Dead:
-                break;
+            if (movingUpwards) 
+            {
+                SoundManager.Instance.PlaySoundDown();
+            }
+            movingUpwards = false;
         }
     }
 
@@ -145,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(new Vector2(0, 1 * upForce) * Time.deltaTime);
     }
 
-    private bool TestInput()
+    private bool TouchInput()
     {
         return
             Input.GetKey(KeyCode.Space) ||
@@ -154,17 +138,17 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void tiltSprite()
+    private void TiltSprite()
     {
-        if (TestInput() && currentEulerAngles.z <= 8)
+        if (TouchInput() && currentEulerAngles.z <= 8)
         {
             currentEulerAngles += new Vector3(0, 0, 1) * Time.deltaTime * tiltSpeed;
         }
-        else if (TestInput())
+        else if (TouchInput())
         {
             currentEulerAngles = new Vector3(0, 0, 8);
         }
-        else if (!TestInput() && currentEulerAngles.z >= -6)
+        else if (!TouchInput() && currentEulerAngles.z >= -6)
         {
             currentEulerAngles += new Vector3(0, 0, -1) * Time.deltaTime * tiltSpeed;
         }
@@ -175,14 +159,41 @@ public class PlayerMovement : MonoBehaviour
         transform.eulerAngles = currentEulerAngles;
     }
 
-    private void smokeParticles()
+    private void SmokeParticles()
     {
         // TODO: Make less smoke if not isjumping
     }
 
-    private void IncreaseSize()
+    void OnCollisionEnter2D(Collision2D col)
     {
-        transform.localScale = new Vector3(2, 2, 2);
+        if (state == State.Playing)
+        {
+            state = State.Crashed;
+        }
+    }
+
+    void LoadNewGame()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+
+    void Explode()
+    {
+        inExplosionRadius = Physics2D.OverlapCircleAll(transform.position, ExplosionRadius);
+
+        foreach (Collider2D o in inExplosionRadius)
+        {
+            Rigidbody2D o_rigidbody = o.GetComponent<Rigidbody2D>();
+            if (o_rigidbody != null)
+            {
+                Vector2 distanceVector = o.transform.position - transform.position;
+                if (distanceVector.magnitude > 0)
+                {
+                    float explosionForce = ExplosionForceMulti / distanceVector.magnitude;
+                    o_rigidbody.AddForce(distanceVector.normalized * explosionForce);
+                }
+            }
+        }
     }
 
 }
