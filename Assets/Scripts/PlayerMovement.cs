@@ -60,17 +60,23 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Static;
-        playerSO.state = PlayerScriptableObject.State.WaitingToStart;
+
+        GameState.PlayerState = PlayerStates.WaitingToStart;
+
         Debug.Log(playerSO.health);
 
-        //gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        GameState.OnDeadState += HandleDeadState;
+    }
+
+    private void OnDestroy() {
+        GameState.OnDeadState -= HandleDeadState;
     }
 
     void Update()
     {
-        switch (playerSO.state)
+        switch (GameState.PlayerState)
         {
-            case PlayerScriptableObject.State.Playing:
+            case PlayerStates.Playing:
                 TiltPlayer();
                 break;
         }
@@ -78,37 +84,24 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        switch (playerSO.state)
+        switch (GameState.PlayerState)
         {
-            case PlayerScriptableObject.State.WaitingToStart:
+            case PlayerStates.WaitingToStart:
                 MovePlayerRight(playerSpeed / 3);
                 if (TouchInput())
                 {
-                    playerSO.state = PlayerScriptableObject.State.Playing;
                     rb.bodyType = RigidbodyType2D.Dynamic;
+                    GameState.PlayerState = PlayerStates.Playing;
                 }
                 break;
 
-            case PlayerScriptableObject.State.Playing:
+            case PlayerStates.Playing:
                 PlayHelicopterSound();
                 MovePlayerRight(playerSpeed);
                 if (TouchInput())
                 {
                     MovePlayerUp();
                 }
-                break;
-
-            case PlayerScriptableObject.State.Dead:
-                if (OnDeadState != null) {
-                    OnDeadState();
-                }
-                if (!deathStateMethodsCalled)
-                {
-                    Explode();
-                    LoseLife();
-                    deathStateMethodsCalled = true;
-                }
-                Invoke("LoadNewGameScene", (float)2);
                 break;
         }
     }
@@ -127,9 +120,10 @@ public class PlayerMovement : MonoBehaviour
         */
     }
 
-    private void LoseLife()
+    private void HandleDeadState() 
     {
-        playerSO.health -= 1;
+        Explode();
+        Invoke("LoadNewGameScene", (float)2);
     }
 
     private void MovePlayerRight(float speed)
@@ -196,9 +190,10 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (playerSO.state == PlayerScriptableObject.State.Playing)
+        if (GameState.PlayerState == PlayerStates.Playing)
         {
-            playerSO.state = PlayerScriptableObject.State.Crashed;
+            GameState.TriggerDeadStateEvent();
+            GameState.PlayerState = PlayerStates.Dead;
         }
     }
 

@@ -32,7 +32,7 @@ public class Line : MonoBehaviour
     void OnEnable() 
     {
         // TODO - check for state in playermovement / event
-        if (playerSO.state == PlayerScriptableObject.State.WaitingToStart)
+        if (GameState.PlayerState == PlayerStates.WaitingToStart)
         {
             tunnelGapHeight = 14;
             //InvokeRepeating("MoveLines", 0.025f, 0.025f);

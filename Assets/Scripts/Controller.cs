@@ -40,7 +40,7 @@ public class Controller : MonoBehaviour
 
     public void SpawnNewLine()
     {
-        if (playerSO.state == PlayerScriptableObject.State.WaitingToStart)
+        if (GameState.PlayerState == PlayerStates.WaitingToStart)
         {
             // Get next random floor-height
             newHeight = UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
