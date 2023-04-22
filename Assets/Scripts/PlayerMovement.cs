@@ -1,31 +1,48 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float upForce = 14f;
-    [SerializeField] float speed = 14f;
+    [SerializeField] float playerSpeed = 6f;
+
     [SerializeField] float tiltSpeed;
+    Vector3 currentEulerAngles;
 
     // Explosions
     Collider2D[] inExplosionRadius = null;
-    [SerializeField] private float ExplosionForceMulti = 5;
-    [SerializeField] private float ExplosionRadius = 5;
+    [SerializeField] private float explosionForceMulti = 5;
+    [SerializeField] private float explosionRadius = 5;
 
+    /*
     [SerializeField] private Slider speedSlider;
     [SerializeField] private TextMeshProUGUI speedTxt;
 
     [SerializeField] private Slider upForceSlider;
     [SerializeField] private TextMeshProUGUI upForceTxt;
-
-    Vector3 currentEulerAngles;
+    */
+    
 
     private Rigidbody2D rb;
 
+    //public delegate void OnGameOver();
+    //public static OnGameOver onGameOver;
+
+    //public static event Action OnGameOver;
+
+    //public UnityEvent onGameOver;
+
+    //public GameEvent gameEvent;
+
+    public PlayerScriptableObject playerSO;
+
+    /*
     public State state;
     public enum State
     {
@@ -34,56 +51,64 @@ public class PlayerMovement : MonoBehaviour
         Crashed,
         Dead
     }
+    */
 
     private bool movingUpwards = false;
+    private bool deathStateMethodsCalled = false;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Static;
-        state = State.WaitingToStart;
+        playerSO.state = PlayerScriptableObject.State.WaitingToStart;
+        Debug.Log(playerSO.health);
+
+        //gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     void Update()
     {
-        switch (state)
+        switch (playerSO.state)
         {
-            case State.Playing:
-                TiltSprite();
-                SmokeParticles();
+            case PlayerScriptableObject.State.Playing:
+                TiltPlayer();
                 break;
         }
     }
 
     void FixedUpdate()
     {
-        switch (state)
+        switch (playerSO.state)
         {
-            case State.WaitingToStart:
+            case PlayerScriptableObject.State.WaitingToStart:
+                MovePlayerRight(playerSpeed / 3);
                 if (TouchInput())
                 {
-                    state = State.Playing;
+                    playerSO.state = PlayerScriptableObject.State.Playing;
                     rb.bodyType = RigidbodyType2D.Dynamic;
                 }
                 break;
 
-            case State.Playing:
+            case PlayerScriptableObject.State.Playing:
+                PlayHelicopterSound();
+                MovePlayerRight(playerSpeed);
                 if (TouchInput())
                 {
-                    Jump();
+                    MovePlayerUp();
                 }
-                PlayHelicopterSound();
-                // Move right continuously 
-                transform.position += new Vector3(speed * Time.deltaTime, 0);
                 break;
 
-            case State.Crashed:
-                Explode();
-                state = State.Dead;
-                break;
-
-            case State.Dead:
-                Invoke("LoadNewGame", (float)2);
+            case PlayerScriptableObject.State.Dead:
+                if (OnDeadState != null) {
+                    OnDeadState();
+                }
+                if (!deathStateMethodsCalled)
+                {
+                    Explode();
+                    LoseLife();
+                    deathStateMethodsCalled = true;
+                }
+                Invoke("LoadNewGameScene", (float)2);
                 break;
         }
     }
@@ -102,7 +127,17 @@ public class PlayerMovement : MonoBehaviour
         */
     }
 
-    void PlayHelicopterSound()
+    private void LoseLife()
+    {
+        playerSO.health -= 1;
+    }
+
+    private void MovePlayerRight(float speed)
+    {
+        transform.position += new Vector3(speed * Time.deltaTime, 0);
+    }
+
+    private void PlayHelicopterSound()
     {
         // Play sound
         if (TouchInput())
@@ -123,7 +158,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Jump()
+    private void MovePlayerUp()
     {
         //if (EventManager.PlayerPlaying != null) EventManager.PlayerPlaying();
         rb.AddForce(new Vector2(0, 1 * upForce) * Time.deltaTime);
@@ -138,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void TiltSprite()
+    private void TiltPlayer()
     {
         if (TouchInput() && currentEulerAngles.z <= 8)
         {
@@ -159,27 +194,22 @@ public class PlayerMovement : MonoBehaviour
         transform.eulerAngles = currentEulerAngles;
     }
 
-    private void SmokeParticles()
-    {
-        // TODO: Make less smoke if not isjumping
-    }
-
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (state == State.Playing)
+        if (playerSO.state == PlayerScriptableObject.State.Playing)
         {
-            state = State.Crashed;
+            playerSO.state = PlayerScriptableObject.State.Crashed;
         }
     }
 
-    void LoadNewGame()
+    void LoadNewGameScene()
     {
         SceneManager.LoadScene("GameScene");
     }
 
     void Explode()
     {
-        inExplosionRadius = Physics2D.OverlapCircleAll(transform.position, ExplosionRadius);
+        inExplosionRadius = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
 
         foreach (Collider2D o in inExplosionRadius)
         {
@@ -189,7 +219,7 @@ public class PlayerMovement : MonoBehaviour
                 Vector2 distanceVector = o.transform.position - transform.position;
                 if (distanceVector.magnitude > 0)
                 {
-                    float explosionForce = ExplosionForceMulti / distanceVector.magnitude;
+                    float explosionForce = explosionForceMulti / distanceVector.magnitude;
                     o_rigidbody.AddForce(distanceVector.normalized * explosionForce);
                 }
             }

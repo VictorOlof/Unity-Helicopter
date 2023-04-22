@@ -4,43 +4,83 @@ using UnityEngine;
 
 public class Square : MonoBehaviour
 {
-    SpriteRenderer Renderer;
-    
+    SpriteRenderer renderer;
+
+    [Range(0f, 1f)]
+    public float fadeToGreenAmount = 0f;
+    public float fadingSpeed = 0.05f;
+
+
+
     void Start()
     {
         //Fetch the SpriteRenderer from the GameObject
-        Renderer = GetComponent<SpriteRenderer>();
+        renderer = GetComponent<SpriteRenderer>();
+        Color c = renderer.material.color;
+
+        c.r = 1f;
+        c.b = 1f;
+
+        //renderer.material.color = c;
 
         //Controller.GetInstance().GameModeEvent += ChangeColor;
         //InvokeRepeating("ChangeToRandomColor", 0.1f, 0.25f);
+
+        //colorDisco = ChangeToRandomColor;
+
+        //StartCoroutine("FadeToGreen");
+
+    }
+
+    IEnumerator FadeToGreen()
+    {
+        Debug.Log("1");
+        for (float i = 1f; i >= fadeToGreenAmount; i -= 0.05f)
+        {
+            Debug.Log("2");
+
+            Color c = renderer.material.color;
+            c.r = i;
+            c.b = i;
+
+            renderer.material.color = c;
+
+            yield return new WaitForSeconds(fadingSpeed);
+        }
+        Debug.Log("3");
     }
 
     void OnEnable()
     {
+        //onGameOver.AddListener(ChangeToRandomColor);
         //Controller.OnClicked += ChangeToRandomColor;
+        //PlayerMovement.OnGameOver += ChangeToRandomColor;
     }
 
 
     void OnDisable()
     {
-        //Controller.OnClicked -= ChangeToRandomColor;
+        //PlayerMovement.OnGameOver -= ChangeToRandomColor;
     }
 
     
     void ChangeToRandomColor()
     {
+        renderer.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f); 
+        /*
         bool colorBlack = true;
         if (colorBlack)
         {
-            Renderer.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f); 
+            renderer.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f); 
             // orange or transparent new Color(171, 79, 0, 0); 
             colorBlack = false;
         }
         else
         {
-            Renderer.color = Color.black;
+            renderer.color = Color.black;
             colorBlack = true;
         }
+        */
         
     }
     

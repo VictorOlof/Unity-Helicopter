@@ -55,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 70c3b69dc97154831b63ebda7db054f5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -146,3 +146,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c592d886c504e879ebedd0814f57c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeToGreenAmount: 0
+  fadingSpeed: 0.05

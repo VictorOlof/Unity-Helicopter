@@ -13,41 +13,18 @@ public class Controller : MonoBehaviour
     
     private Vector2 latestSpawnedLinePosition;
     private int newHeight = 0;
-
-    enum GameMode
-    {
-        Start,
-        LowTunnel,
-        HighTunnel
-    }
-    GameMode currentGameMode;
-
-    //public delegate void ClickAction();
-    //public static event ClickAction OnClicked;
-
-    void Awake()
-    {
-        currentGameMode = GameMode.Start;
-    }
+    public PlayerScriptableObject playerSO;
     
     void Start()
     {
         SpawnStartLines();
-        InvokeRepeating("ChangeToRandomGameMode", 1.0f, 1.0f);
         Application.targetFrameRate = 60;
-    }
-
-    void ChangeToRandomGameMode()
-    {
-        currentGameMode = (GameMode)UnityEngine.Random.Range(0, Enum.GetNames(typeof(GameMode)).Length);
-        //if(OnClicked != null)
-        //    OnClicked();
     }
 
     void SpawnStartLines()
     {
         // Spawn lines on X-axis
-        for (int x = 0; x < tunnelWidth; x++)
+        for (int x = -21; x < (tunnelWidth - 21); x++)
         {
             // Get next random floor-height
             newHeight = UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
@@ -56,15 +33,23 @@ public class Controller : MonoBehaviour
             // Spawn 1 new line 
             GameObject newline = SpawnLineObj(latestSpawnedLinePosition);
             
-            Line lineScript = (Line)newline.GetComponent(typeof(Line));
-            lineScript.lineMovement = true;
+            //Line lineScript = (Line)newline.GetComponent(typeof(Line));
+            //lineScript.lineMovement = true;
         }
     }
 
     public void SpawnNewLine()
     {
-        // Get next random floor-height
-        newHeight += UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
+        if (playerSO.state == PlayerScriptableObject.State.WaitingToStart)
+        {
+            // Get next random floor-height
+            newHeight = UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
+        }
+        else
+        {
+            // Get next random floor-height
+            newHeight += UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
+        }
         // Update latest position
         latestSpawnedLinePosition = new Vector2(latestSpawnedLinePosition.x + 1, newHeight);
         // Spawn 1 new line 

@@ -15,8 +15,7 @@ public class Line : MonoBehaviour
 
     GameObject cameraGameObject;
     Controller controllerScript;
-    [SerializeField] GameObject playerMovement;
-
+    public PlayerScriptableObject playerSO;
 
     void Awake()
     {
@@ -32,18 +31,21 @@ public class Line : MonoBehaviour
 
     void OnEnable() 
     {
-        // TODO - check for state in playermonement / event
-        
-
-        if (lineMovement)
+        // TODO - check for state in playermovement / event
+        if (playerSO.state == PlayerScriptableObject.State.WaitingToStart)
         {
-            InvokeRepeating("MoveLines", 0.025f, 0.025f);  
-        }
-        else
-        {
+            tunnelGapHeight = 14;
+            //InvokeRepeating("MoveLines", 0.025f, 0.025f);
             topLine.transform.position    = new Vector2(topLine.transform.position.x,       (float) topLine.transform.position.y + (float) 6.0);
             bottomLine.transform.position = new Vector2(bottomLine.transform.position.x,    (float) bottomLine.transform.position.y - (float) 6.0);
         }
+        else
+        {
+            tunnelGapHeight = 10;
+            InvokeRepeating("MoveLines", 0.025f, 0.025f);  
+        }
+        
+        
     }
 
     void OnDisable() 
