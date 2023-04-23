@@ -9,11 +9,6 @@ public class PlayerHealth : MonoBehaviour
         GameState.OnDeadState += HandleDeadState;
     }
 
-    void Start()
-    {
-        
-    }
-
     void OnDestroy() {
         GameState.OnDeadState -= HandleDeadState;
     }

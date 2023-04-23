@@ -9,6 +9,7 @@ using UnityEngine;
 public class Line : MonoBehaviour
 {
     private GameObject bottomLine, topLine;
+    [SerializeField]
     private int tunnelGapHeight = 12;
     private double currentTunnelGapHeight = 0;
     public bool lineMovement = true;

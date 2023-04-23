@@ -19,6 +19,8 @@ public class CameraController : MonoBehaviour
         //Controller.GetInstance().GameModeEvent += ChangeColor;
         InvokeRepeating("ChangeToRandomColor", 0.5f, 0.25f);
         //InvokeRepeating("ChangeToRandomColor2", 0.5f, 3);
+
+        Application.targetFrameRate = 60;
     }
 
     void ChangeToRandomColor()
