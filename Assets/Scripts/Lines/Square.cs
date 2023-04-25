@@ -12,10 +12,31 @@ public class Square : MonoBehaviour
 
 
 
+
+    void Awake()
+    {
+        renderer = GetComponent<SpriteRenderer>();
+
+        GameState.OnDeadState += HandleDeadState2;
+    }
+
+    private void OnDestroy() 
+    {
+        GameState.OnDeadState -= HandleDeadState2;
+    }
+
+    private void HandleDeadState2() 
+    {
+        renderer.color = Color.red;
+    }
+
+
+
+
     void Start()
     {
         //Fetch the SpriteRenderer from the GameObject
-        renderer = GetComponent<SpriteRenderer>();
+        
         Color c = renderer.material.color;
 
         c.r = 1f;

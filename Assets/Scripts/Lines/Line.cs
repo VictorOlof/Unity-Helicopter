@@ -16,7 +16,6 @@ public class Line : MonoBehaviour
 
     GameObject cameraGameObject;
     Controller controllerScript;
-    public PlayerScriptableObject playerSO;
 
     void Awake()
     {

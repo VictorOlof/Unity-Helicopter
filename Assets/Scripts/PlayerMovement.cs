@@ -9,9 +9,13 @@ using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private Rigidbody2D rb;
+
+    // Speed
     [SerializeField] float upForce = 14f;
     [SerializeField] float playerSpeed = 6f;
 
+    // Player tilt
     [SerializeField] float tiltSpeed;
     Vector3 currentEulerAngles;
 
@@ -20,41 +24,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float explosionForceMulti = 5;
     [SerializeField] private float explosionRadius = 5;
 
-    /*
-    [SerializeField] private Slider speedSlider;
-    [SerializeField] private TextMeshProUGUI speedTxt;
-
-    [SerializeField] private Slider upForceSlider;
-    [SerializeField] private TextMeshProUGUI upForceTxt;
-    */
-    
-
-    private Rigidbody2D rb;
-
-    //public delegate void OnGameOver();
-    //public static OnGameOver onGameOver;
-
-    //public static event Action OnGameOver;
-
-    //public UnityEvent onGameOver;
-
-    //public GameEvent gameEvent;
-
-    public PlayerScriptableObject playerSO;
-
-    /*
-    public State state;
-    public enum State
-    {
-        WaitingToStart,
-        Playing,
-        Crashed,
-        Dead
-    }
-    */
-
+    // Sound
     private bool movingUpwards = false;
-    private bool deathStateMethodsCalled = false;
 
     void Awake()
     {
@@ -62,13 +33,11 @@ public class PlayerMovement : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Static;
 
         GameState.PlayerState = PlayerStates.WaitingToStart;
-
-        Debug.Log(playerSO.health);
-
         GameState.OnDeadState += HandleDeadState;
     }
 
-    private void OnDestroy() {
+    private void OnDestroy() 
+    {
         GameState.OnDeadState -= HandleDeadState;
     }
 
