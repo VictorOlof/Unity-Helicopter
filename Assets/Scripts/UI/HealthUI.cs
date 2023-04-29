@@ -5,20 +5,30 @@ using UnityEngine.UI;
 public class HealthUI : MonoBehaviour
 {
     public HealthSO health;
-    public TextMeshProUGUI healthText;
+    public Image[] hearts;
 
-    private void Start()
+    void Awake()
     {
+        GameState.OnDeadState += UpdateHealthUI;
         UpdateHealthUI();
     }
 
-    private void Update()
+    private void OnDestroy() 
     {
-        UpdateHealthUI();
+        GameState.OnDeadState -= UpdateHealthUI;
     }
 
-    private void UpdateHealthUI()
+    private void UpdateHealthUI() 
     {
-        healthText.text = "Health: " + health.currentHealth.ToString() + "/" + health.maxHealth.ToString();
+        for (int i = 0; i < hearts.Length; i++)
+        {
+            if (i < health.currentHealth)
+            {
+                hearts[i].enabled = true;
+            } else {
+                hearts[i].enabled = false;
+            }
+        }
     }
 }
+

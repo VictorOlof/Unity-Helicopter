@@ -6,14 +6,14 @@ public class PlayerHealth : MonoBehaviour
 
     void Awake()
     {
-        GameState.OnDeadState += HandleDeadState;
+        GameState.OnDeadState += LoseOneLife;
     }
 
     void OnDestroy() {
-        GameState.OnDeadState -= HandleDeadState;
+        GameState.OnDeadState -= LoseOneLife;
     }
 
-    private void HandleDeadState()
+    private void LoseOneLife()
     {
         health.TakeDamage(1);
     }

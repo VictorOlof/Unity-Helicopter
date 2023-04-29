@@ -5,7 +5,7 @@ using UnityEngine;
 public class LineBottom : MonoBehaviour
 {
     [SerializeField] GameObject grass, dirt, stone;
-    [SerializeField] int lineHeight = 27;
+    private int lineHeight = 27;
 
     void Start()
     {
