@@ -17,9 +17,10 @@ public class Square : MonoBehaviour
     {
         renderer = GetComponent<SpriteRenderer>();
 
-        GameState.OnDeadState += HandleDeadState2;
+        //GameState.OnDeadState += HandleDeadState2;
     }
 
+    /*
     private void OnDestroy() 
     {
         GameState.OnDeadState -= HandleDeadState2;
@@ -29,12 +30,12 @@ public class Square : MonoBehaviour
     {
         renderer.color = Color.red;
     }
-
-
+    */
 
 
     void Start()
     {
+
         //Fetch the SpriteRenderer from the GameObject
         
         Color c = renderer.material.color;

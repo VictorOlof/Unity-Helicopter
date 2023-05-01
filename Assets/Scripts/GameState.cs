@@ -17,4 +17,17 @@ public static class GameState
             OnDeadState();
         }
     }
+
+    
+    public delegate void PlayStateHandler();
+    public static event PlayStateHandler OnPlayState;
+
+    public static void TriggerPlayStateEvent() 
+    {
+        if (OnPlayState != null) 
+        {
+            OnPlayState();
+        }
+    }
+    
 }

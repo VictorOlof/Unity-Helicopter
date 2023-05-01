@@ -41,7 +41,7 @@ public class Line : MonoBehaviour
         }
         else
         {
-            tunnelGapHeight = 5;
+            tunnelGapHeight = 12;
             InvokeRepeating("MoveLines", 0.025f, 0.025f);  
         }
         

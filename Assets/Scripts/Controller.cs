@@ -8,11 +8,13 @@ using System;
 public class Controller : MonoBehaviour
 {
     [SerializeField] int tunnelWidth;
-    [SerializeField] int maxHeightChange = 2;
+    [SerializeField] int maxHeightChange = 1;
     [SerializeField] GameObject lineParent;
     
-    private Vector2 latestSpawnedLinePosition;
+    //private Vector2 line.latestSpawnedLinePosition;
     private int newRandomHeight = 0;
+
+    public LineSO line;
     
     void Start()
     {
@@ -24,8 +26,8 @@ public class Controller : MonoBehaviour
         for (int x = -21; x < (tunnelWidth - 21); x++)
         {
             newRandomHeight = UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
-            latestSpawnedLinePosition = new Vector2(x, newRandomHeight);
-            GameObject newline = SpawnLineObj(latestSpawnedLinePosition);
+            line.latestSpawnedLinePosition = new Vector2(x, newRandomHeight);
+            GameObject newline = SpawnLineObj(line.latestSpawnedLinePosition);
         }
     }
 
@@ -39,8 +41,8 @@ public class Controller : MonoBehaviour
         {
             newRandomHeight += UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
         }
-        latestSpawnedLinePosition = new Vector2(latestSpawnedLinePosition.x + 1, newRandomHeight);
-        GameObject newline = SpawnLineObj(latestSpawnedLinePosition);
+        line.latestSpawnedLinePosition = new Vector2(line.latestSpawnedLinePosition.x + 1, newRandomHeight);
+        GameObject newline = SpawnLineObj(line.latestSpawnedLinePosition);
     }
 
     GameObject SpawnLineObj(Vector2 position)

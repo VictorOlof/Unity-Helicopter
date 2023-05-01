@@ -61,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     rb.bodyType = RigidbodyType2D.Dynamic;
                     GameState.PlayerState = PlayerStates.Playing;
+                    GameState.TriggerPlayStateEvent();
                 }
                 break;
 
@@ -76,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Start() {
+        Application.targetFrameRate = 60;
         /*
         speedSlider.onValueChanged.AddListener((v) => {
             speedTxt.text = v.ToString("0");
