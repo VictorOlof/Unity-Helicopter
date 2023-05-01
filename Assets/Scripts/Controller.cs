@@ -12,7 +12,7 @@ public class Controller : MonoBehaviour
     [SerializeField] GameObject lineParent;
     
     //private Vector2 line.latestSpawnedLinePosition;
-    private int newRandomHeight = 0;
+    private int newRandomHeight;
 
     public LineSO line;
     
