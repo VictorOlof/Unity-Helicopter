@@ -5,15 +5,29 @@ using System.Collections;
 public class ExplodeOnClick : MonoBehaviour {
 
 	private Explodable _explodable;
+	private ExplosionForce ef;
 
 	void Start()
 	{
 		_explodable = GetComponent<Explodable>();
+		ef = GameObject.FindObjectOfType<ExplosionForce>();
 	}
-	void OnMouseDown()
+
+	void Awake()
+    {
+        GameState.OnDeadState += Explode;
+    }
+
+    private void OnDestroy() 
+    {
+        GameState.OnDeadState -= Explode;
+    }
+
+	void Explode()
 	{
 		_explodable.explode();
-		ExplosionForce ef = GameObject.FindObjectOfType<ExplosionForce>();
 		ef.doExplosion(transform.position);
 	}
+
+	
 }
