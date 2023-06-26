@@ -46,7 +46,7 @@ public class Square : MonoBehaviour
         //renderer.material.color = c;
 
         //Controller.GetInstance().GameModeEvent += ChangeColor;
-        //InvokeRepeating("ChangeToRandomColor", 0.1f, 0.25f);
+        InvokeRepeating("ChangeToRandomColor", 0.1f, 0.25f);
 
         //colorDisco = ChangeToRandomColor;
 
