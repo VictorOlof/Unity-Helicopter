@@ -5,8 +5,8 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField]
     private LevelParameters[] levelParameters;
-    private int currentLevelIndex = 0; // getter setter
     private LevelParameters currentLevelParameters;
+    private int currentLevelIndex = 0; 
     public LevelTimer levelTimer;
 
     public delegate void NewLevelEvent(LevelParameters levelParameter);
@@ -28,8 +28,7 @@ public class LevelManager : MonoBehaviour
         LevelTimer.OnLevelTimerComplete += StartNextLevel;
     }
 
-
-    private void StartNextLevel()
+    public void StartNextLevel()
     {
         if ((currentLevelIndex + 1) < levelParameters.Length)
         {

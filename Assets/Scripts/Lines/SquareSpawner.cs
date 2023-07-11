@@ -5,7 +5,7 @@ using UnityEngine;
 public class SquareSpawner : MonoBehaviour
 {
     [SerializeField] GameObject square;
-    [SerializeField] int squareLineHeight = 10;
+    [SerializeField] int squareLineHeight = 30;
 
     private enum SpawningDirection
     {

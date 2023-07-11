@@ -28,20 +28,36 @@ public class PlayerMovement : MonoBehaviour
     // Sound
     private bool movingUpwards = false;
 
+    // Level
+    public float nextLevelPos = 100;
+    LineManager lineManager;
+
     void Awake()
     {
+        lineManager = FindObjectOfType<LineManager>();
+
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Static;
 
         GameState.PlayerState = PlayerStates.WaitingToStart;
         GameState.OnDeadState += HandleDeadState;
         LevelManager.OnLevelParamChanged += UpdateSpeed;
+
+        LevelTimer.OnLevelTimerComplete += GetNextLevelPos;
     }
 
     private void OnDestroy() 
     {
         GameState.OnDeadState -= HandleDeadState;
         LevelManager.OnLevelParamChanged -= UpdateSpeed;
+
+        LevelTimer.OnLevelTimerComplete += GetNextLevelPos;
+    }
+
+    private void GetNextLevelPos()
+    {
+        nextLevelPos = lineManager.latestSpawnedLinePosition.x;
+        Debug.Log("nextlevelPos : " + nextLevelPos);
     }
 
     private void UpdateSpeed(LevelParameters currentLevelParameters)
@@ -49,12 +65,23 @@ public class PlayerMovement : MonoBehaviour
         playerSpeed = currentLevelParameters.playerSpeed;
     }
 
+    void MovedTroughNextLevel()
+    {
+        // todo - bool on levelmanager if nextlevel has occured.
+        // if not, raise an startNextLevel event
+        // let that event set bool to false again?
+        // or let the LevelTimer do that
+        //return (transform.position.x > nextLevelPos && !levelManager.eventOccurred);
+    }
+
+
     void Update()
     {
         switch (GameState.PlayerState)
         {
             case PlayerStates.Playing:
                 TiltPlayer();
+                //if (MovedTroughNextLevel)
                 break;
         }
     }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 public class LineManager : MonoBehaviour
 {
     [SerializeField] private int tunnelWidth;
-    [SerializeField] public int maxHeightChange;
+    [SerializeField] public int maxHeightChange = 2;
     [SerializeField] GameObject lineParent;
     public int newRandomHeight;
     public int spawningHeight;
@@ -34,7 +34,6 @@ public class LineManager : MonoBehaviour
     void Start()
     {
         //todo UpdateParams(LevelManager.getCurrentLevelParameters());
-        maxHeightChange = 2;
 
         SpawnStartLines();
     }
@@ -54,36 +53,21 @@ public class LineManager : MonoBehaviour
 
     public void SpawnNewLine()
     {
-        
-        if (GameState.PlayerState == PlayerStates.WaitingToStart)
+        switch (GameState.PlayerState)
         {
-            //spawningHeight = UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
-            spawningHeight = UnityEngine.Random.Range(0, maxHeightChange +1);
+            case PlayerStates.WaitingToStart:
+                //spawningHeight = UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
+                spawningHeight = UnityEngine.Random.Range(0, maxHeightChange +1);
+                break;
 
-            latestSpawnedLinePosition = new Vector2(latestSpawnedLinePosition.x + 1, spawningHeight);
-            SpawnLineObj(latestSpawnedLinePosition);
+            case PlayerStates.Playing:
+                newRandomHeight = UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
+                spawningHeight += newRandomHeight;
+                break;
         }
-        else if (GameState.PlayerState == PlayerStates.Playing)
-        {
-            newRandomHeight = UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
-            spawningHeight += newRandomHeight;
 
-            latestSpawnedLinePosition = new Vector2(latestSpawnedLinePosition.x + 1, spawningHeight);
-            SpawnLineObj(latestSpawnedLinePosition);
-        }
-        
-        
-        
-        /* Needs Level Manager obj to be enabled
-        if (menuMode)
-        {
-            newRandomHeight = UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
-        }
-        else
-        {
-            newRandomHeight += UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
-        }
-        */
+        latestSpawnedLinePosition = new Vector2(latestSpawnedLinePosition.x + 1, spawningHeight);
+        SpawnLineObj(latestSpawnedLinePosition);
     }
 
     void SpawnLineObj(Vector2 spawnPosition)

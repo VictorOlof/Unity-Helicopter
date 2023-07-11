@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34ca0a8686814483ca0361d369092587, type: 3}
   m_Name: LvlParm1
   m_EditorClassIdentifier: 
-  playerSpeed: 7
+  playerSpeed: 8
   levelDuration: 7
   menuMode: 0
-  maxHeightChange: 4
+  maxHeightChange: 3
+  tunnelGapHeight: 15
+  tunnelGapHeightRandomness: 0

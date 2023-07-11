@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 493381838990576094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   square: {fileID: 3483298675060914152, guid: ba57dcfb70a3f4231b4eadc05775a2cc, type: 3}
-  squareLineHeight: 10
+  squareLineHeight: 25
   spawningDirection: 1
 --- !u!1 &3120204882587012292
 GameObject:
@@ -94,7 +94,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tunnelGapHeight: 12
+  tunnelGapHeightRandomness: 0
   lineMovement: 1
+  lineTopHeight: 0
+  lineBottomHeight: 0
+  currentLineTopHeight: 1
+  currentLineBottomHeight: -1
+  topLineTarget: {x: 0, y: 0}
 --- !u!1 &6584232829895341609
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +126,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6584232829895341609}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -140,5 +146,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   square: {fileID: 3483298675060914152, guid: ba57dcfb70a3f4231b4eadc05775a2cc, type: 3}
-  squareLineHeight: 10
+  squareLineHeight: 25
   spawningDirection: 0

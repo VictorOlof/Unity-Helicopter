@@ -10,14 +10,14 @@ public class Line : MonoBehaviour
 {
     private GameObject bottomLine, topLine;
     [SerializeField]
-    public int tunnelGapHeight = 10;
-    public int tunnelGapHeightRandomness = 2;
+    public int tunnelGapHeight = 20;
+    public int tunnelGapHeightRandomness = 0;
     
     public bool lineMovement = true;
 
-    private int lineTopHeight, lineBottomHeight;
-    private float currentLineTopHeight = 1;
-    private float currentLineBottomHeight = 1;
+    [SerializeField] private int lineTopHeight, lineBottomHeight;
+    [SerializeField] private float currentLineTopHeight = 1;
+    [SerializeField] private float currentLineBottomHeight = -1;
 
     GameObject cameraGameObject;
     LineManager lineManagerScript;
@@ -52,9 +52,27 @@ public class Line : MonoBehaviour
         {
             //SetTopBottomLinesHeight();
             
-            //InvokeRepeating("MoveTopLine", 0.025f, 0.025f);
-            //InvokeRepeating("MoveBottomLine", 0.025f, 0.025f);  
+            InvokeRepeating("MoveTopLine", 0.025f, 0.025f);
+            InvokeRepeating("MoveBottomLine", 0.025f, 0.025f);  
         }
+
+        LevelManager.OnLevelParamChanged += UpdateParams;
+    }
+
+    void OnDisable() 
+    {
+        topLine.transform.localPosition    = new Vector2(topLine.transform.localPosition.x,    (float) 1);
+        bottomLine.transform.localPosition = new Vector2(bottomLine.transform.localPosition.x, (float) -1);
+        currentLineTopHeight = 1;
+        currentLineBottomHeight = -1;
+
+        LevelManager.OnLevelParamChanged -= UpdateParams;
+    }
+
+    private void UpdateParams(LevelParameters currentLevelParameters)
+    {
+        tunnelGapHeight = currentLevelParameters.tunnelGapHeight;
+        tunnelGapHeightRandomness = currentLevelParameters.tunnelGapHeightRandomness;
     }
 
     void Update() 
@@ -71,10 +89,11 @@ public class Line : MonoBehaviour
             ///targetObject = new GameObject("Target");
             //targetObject.transform.position = targetPosition;
 
-            topLine.transform.localPosition = Vector3.Lerp(topLine.transform.localPosition, topLineTarget, 2 * Time.deltaTime);
+            //topLine.transform.localPosition = Vector3.Lerp(topLine.transform.localPosition, topLineTarget, 2 * Time.deltaTime);
             //Vector2.MoveTowards(topLine.transform.localPosition, topLineTarget.localPosition, 2 * Time.deltaTime);
         }
     }
+
 
     void CalcTopBottomLinesHeight()
     {
@@ -82,28 +101,16 @@ public class Line : MonoBehaviour
         lineTopHeight    = Mathf.RoundToInt(heightDiv);
         lineBottomHeight = Mathf.RoundToInt(heightDiv) * -1;
 
-        // Add some randomness - todo lines crashar i varandra vid start på rörelse
-        lineTopHeight    += UnityEngine.Random.Range(0, tunnelGapHeightRandomness);
-        lineBottomHeight += UnityEngine.Random.Range(tunnelGapHeightRandomness * -1, 0);
+        lineTopHeight    += UnityEngine.Random.Range(0, tunnelGapHeightRandomness +1);
+        lineBottomHeight += (UnityEngine.Random.Range(0, tunnelGapHeightRandomness +1)) * -1;
 
-        topLineTarget = new Vector2(transform.localPosition.x, (transform.localPosition.y + lineTopHeight));
+        //topLineTarget = new Vector2(transform.localPosition.x, (transform.localPosition.y + lineTopHeight));
     }
 
     void SetTopBottomLinesHeight()
     {
-        Debug.Log(lineTopHeight);
-        Debug.Log(lineBottomHeight);
-
         topLine.transform.localPosition    = new Vector2(topLine.transform.localPosition.x,    (float) lineTopHeight);
         bottomLine.transform.localPosition = new Vector2(bottomLine.transform.localPosition.x, (float) lineBottomHeight);
-    }
-
-    void OnDisable() 
-    {
-        topLine.transform.localPosition    = new Vector2(topLine.transform.localPosition.x,    (float) 1);
-        bottomLine.transform.localPosition = new Vector2(bottomLine.transform.localPosition.x, (float) -1);
-        currentLineTopHeight = 1;
-        currentLineBottomHeight = 1;
     }
 
     bool IfOutsideCameraLeft()
@@ -117,20 +124,16 @@ public class Line : MonoBehaviour
         // Todo change movement method
         if (currentLineTopHeight < lineTopHeight)
         {
-            currentLineTopHeight += (float) 0.1;
-            
+            currentLineTopHeight += (float) 0.05;
             topLine.transform.localPosition    = new Vector2(topLine.transform.localPosition.x,       (float) topLine.transform.localPosition.y + (float) 0.05);
-            //bottomLine.transform.localPosition = new Vector2(bottomLine.transform.localPosition.x,    (float) bottomLine.transform.localPosition.y - (float) 0.05);
         }
     }
 
     void MoveBottomLine() {
         // Todo change movement method
-        if (currentLineBottomHeight < lineBottomHeight)
+        if (currentLineBottomHeight > lineBottomHeight)
         {
-            currentLineBottomHeight += (float) 0.1;
-            
-            //topLine.transform.localPosition    = new Vector2(topLine.transform.localPosition.x,       (float) topLine.transform.localPosition.y + (float) 0.05);
+            currentLineBottomHeight -= (float) 0.05;
             bottomLine.transform.localPosition = new Vector2(bottomLine.transform.localPosition.x,    (float) bottomLine.transform.localPosition.y - (float) 0.05);
         }
     }
