@@ -9,6 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc6df89f7777846aabb74ca0f302cf71, type: 3}
-  m_Name: On Game Over
+  m_Script: {fileID: 11500000, guid: 34ca0a8686814483ca0361d369092587, type: 3}
+  m_Name: LvlParm3
   m_EditorClassIdentifier: 
+  playerSpeed: 8
+  levelDuration: 10
+  maxHeightChange: 2
+  tunnelGapHeight: 10
+  tunnelGapHeightRandomness: 0

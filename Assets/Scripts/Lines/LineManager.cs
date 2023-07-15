@@ -16,14 +16,23 @@ public class LineManager : MonoBehaviour
     public int spawningHeight;
 
     public Vector2 latestSpawnedLinePosition;
+    public LevelSO LevelSO;
 
     private void Awake()
     {
-        LevelManager.OnLevelParamChanged += UpdateParams;
+        LevelEvents.OnLevelParamChanged += UpdateParams;
+        LevelTimer.OnLevelTimerComplete  += SetNextPlayerLineGoal;
     }
     private void OnDestroy() 
     {
-        LevelManager.OnLevelParamChanged -= UpdateParams;
+        LevelEvents.OnLevelParamChanged -= UpdateParams;
+        LevelTimer.OnLevelTimerComplete  -= SetNextPlayerLineGoal;
+    }
+
+    private void SetNextPlayerLineGoal()
+    {
+        Debug.Log("LineManager:SetNextPlayerLineGoal");
+        LevelSO.SetNewLineGoal(latestSpawnedLinePosition.x);
     }
 
     private void UpdateParams(LevelParameters currentLevelParameters)

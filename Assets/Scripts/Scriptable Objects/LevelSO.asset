@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34ca0a8686814483ca0361d369092587, type: 3}
-  m_Name: LvlParm1
+  m_Script: {fileID: 11500000, guid: e9df4459caf20449ba3f1b4d810b67d7, type: 3}
+  m_Name: LevelSO
   m_EditorClassIdentifier: 
-  playerSpeed: 9
-  levelDuration: 6
-  maxHeightChange: 3
-  tunnelGapHeight: 10
-  tunnelGapHeightRandomness: 0
+  playerLineGoalXPos: 0
+  playerLineGoal: 0

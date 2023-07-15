@@ -10,7 +10,6 @@ public class LevelParameters : ScriptableObject
     public float levelDuration = 10;
 
     // Lines
-    public bool menuMode;
     public int maxHeightChange = 2;
     public int tunnelGapHeight = 6;
     public int tunnelGapHeightRandomness = 0;

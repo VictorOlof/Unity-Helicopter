@@ -56,7 +56,8 @@ public class Line : MonoBehaviour
             InvokeRepeating("MoveBottomLine", 0.025f, 0.025f);  
         }
 
-        LevelManager.OnLevelParamChanged += UpdateParams;
+        LevelEvents.OnLevelParamChanged += UpdateParams;
+        //LevelTimer.OnLevelTimerComplete += UpdateParams;
     }
 
     void OnDisable() 
@@ -66,7 +67,11 @@ public class Line : MonoBehaviour
         currentLineTopHeight = 1;
         currentLineBottomHeight = -1;
 
-        LevelManager.OnLevelParamChanged -= UpdateParams;
+        LevelEvents.OnLevelParamChanged -= UpdateParams;
+        //LevelTimer.OnLevelTimerComplete -= UpdateParams;
+
+        // LevelManager.OnLevelParamChanged eventet invokar med levelparameter
+        // todo - lagra denna currentLevelParameters i ett scriptableobject 
     }
 
     private void UpdateParams(LevelParameters currentLevelParameters)

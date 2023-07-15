@@ -1,31 +1,34 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField]
-    private LevelParameters[] levelParameters;
+    [SerializeField] private LevelParameters[] levelParameters;
     private LevelParameters currentLevelParameters;
     private int currentLevelIndex = 0; 
     public LevelTimer levelTimer;
 
-    public delegate void NewLevelEvent(LevelParameters levelParameter);
-    public static event NewLevelEvent OnLevelParamChanged; 
     
+    
+     
 
 
     void Awake()
     {
+        Debug.Log(levelParameters.GetType());
+
         currentLevelParameters = levelParameters[currentLevelIndex];
 
         GameState.OnPlayState += StartNextLevel;
-        LevelTimer.OnLevelTimerComplete += StartNextLevel;
+        LevelEvents.OnNextLevelParam += StartNextLevel;
     }
 
     private void OnDestroy() 
     {
         GameState.OnPlayState -= StartNextLevel;
-        LevelTimer.OnLevelTimerComplete += StartNextLevel;
+        LevelEvents.OnNextLevelParam -= StartNextLevel;
     }
 
     public void StartNextLevel()
@@ -35,7 +38,7 @@ public class LevelManager : MonoBehaviour
             Debug.Log("level: " + currentLevelIndex);
 
             currentLevelParameters = levelParameters[currentLevelIndex];
-            OnLevelParamChanged?.Invoke(currentLevelParameters);
+            LevelEvents.InvokeLevelParamChanged(currentLevelParameters);
             levelTimer.StartTimer(currentLevelParameters.levelDuration);
 
             currentLevelIndex++;
@@ -45,7 +48,7 @@ public class LevelManager : MonoBehaviour
             Debug.Log("End level: " + currentLevelIndex);
 
             currentLevelParameters = levelParameters[currentLevelIndex];
-            OnLevelParamChanged?.Invoke(currentLevelParameters);
+            LevelEvents.InvokeLevelParamChanged(currentLevelParameters);
             // Game finished, crash into wall of squares? Huge explosion.
         }
         else

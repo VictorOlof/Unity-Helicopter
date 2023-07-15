@@ -30,34 +30,22 @@ public class PlayerMovement : MonoBehaviour
 
     // Level
     public float nextLevelPos = 100;
-    LineManager lineManager;
+    public LevelSO LevelSO;
 
     void Awake()
     {
-        lineManager = FindObjectOfType<LineManager>();
-
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Static;
 
         GameState.PlayerState = PlayerStates.WaitingToStart;
         GameState.OnDeadState += HandleDeadState;
-        LevelManager.OnLevelParamChanged += UpdateSpeed;
-
-        LevelTimer.OnLevelTimerComplete += GetNextLevelPos;
+        LevelEvents.OnLevelParamChanged += UpdateSpeed;
     }
 
     private void OnDestroy() 
     {
         GameState.OnDeadState -= HandleDeadState;
-        LevelManager.OnLevelParamChanged -= UpdateSpeed;
-
-        LevelTimer.OnLevelTimerComplete += GetNextLevelPos;
-    }
-
-    private void GetNextLevelPos()
-    {
-        nextLevelPos = lineManager.latestSpawnedLinePosition.x;
-        Debug.Log("nextlevelPos : " + nextLevelPos);
+        LevelEvents.OnLevelParamChanged -= UpdateSpeed;
     }
 
     private void UpdateSpeed(LevelParameters currentLevelParameters)
@@ -65,13 +53,13 @@ public class PlayerMovement : MonoBehaviour
         playerSpeed = currentLevelParameters.playerSpeed;
     }
 
-    void MovedTroughNextLevel()
+    bool MovedTroughNextLevel()
     {
         // todo - bool on levelmanager if nextlevel has occured.
         // if not, raise an startNextLevel event
         // let that event set bool to false again?
         // or let the LevelTimer do that
-        //return (transform.position.x > nextLevelPos && !levelManager.eventOccurred);
+        return (transform.position.x > LevelSO.playerLineGoalXPos && LevelSO.playerLineGoal == true);
     }
 
 
@@ -81,7 +69,11 @@ public class PlayerMovement : MonoBehaviour
         {
             case PlayerStates.Playing:
                 TiltPlayer();
-                //if (MovedTroughNextLevel)
+                if (MovedTroughNextLevel())
+                {
+                    LevelEvents.InvokeNextLevelParam();
+                    LevelSO.StopLineGoal();
+                }
                 break;
         }
     }
