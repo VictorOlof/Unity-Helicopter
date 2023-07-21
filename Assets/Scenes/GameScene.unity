@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -175,6 +175,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -189,6 +195,25 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -210,6 +235,7 @@ PolygonCollider2D:
       - {x: -0.3875001, y: -0.25066665}
       - {x: -0.38950008, y: -0.40766665}
       - {x: 0.47649992, y: -0.42066666}
+  m_UseDelaunayMesh: 0
 --- !u!23 &31696335
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -312,6 +338,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -326,6 +358,25 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -345,6 +396,7 @@ PolygonCollider2D:
       - {x: 0.153, y: 0.231}
       - {x: -0.21500003, y: 0.19699997}
       - {x: -0.12900007, y: -0.245}
+  m_UseDelaunayMesh: 0
 --- !u!23 &103083872
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -450,7 +502,7 @@ MonoBehaviour:
   duration: 0.35
 --- !u!95 &259315591
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -467,7 +519,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &259315592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -654,6 +707,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -668,6 +727,25 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -688,6 +766,7 @@ PolygonCollider2D:
       - {x: -0.092999935, y: 0.2718}
       - {x: -0.413, y: 0.2098}
       - {x: -0.32799995, y: -0.2312}
+  m_UseDelaunayMesh: 0
 --- !u!23 &373563317
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -759,7 +838,7 @@ GameObject:
   m_IsActive: 1
 --- !u!95 &417040172
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -776,7 +855,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!212 &417040173
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1089,6 +1169,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -1103,6 +1189,25 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -1124,6 +1229,7 @@ PolygonCollider2D:
       - {x: -0.535, y: 0.17216668}
       - {x: -0.49700004, y: -0.24183334}
       - {x: 0.011999965, y: -0.54183334}
+  m_UseDelaunayMesh: 0
 --- !u!23 &486030564
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1181,7 +1287,7 @@ Mesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  serializedVersion: 10
+  serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -1328,6 +1434,7 @@ Mesh:
     m_Center: {x: 0.0025000274, y: 0.020300008, z: 0}
     m_Extent: {x: 0.41550002, y: 0.2515, z: 0}
   m_MeshUsageFlags: 0
+  m_CookingOptions: 30
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshMetrics[0]: 1
@@ -1343,6 +1450,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2772069425986891808, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
@@ -1592,6 +1700,51 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2772069425986891813, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
     - {fileID: 2772069425986891815, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891834, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 31696332}
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891834, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1517948203}
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891834, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 373563314}
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891834, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1944158489}
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891834, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 103083869}
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891834, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 486030561}
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891834, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 858371211}
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891834, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1543013324}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891833, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 656802776}
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891833, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 656802775}
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891833, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 656802771}
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891833, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 656802772}
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891833, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 656802773}
+    - targetCorrespondingSourceObject: {fileID: 2772069425986891833, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 656802774}
   m_SourcePrefab: {fileID: 100100000, guid: 54e79dfc7d5064714ad8154fd44a2f3a, type: 3}
 --- !u!4 &656802768 stripped
 Transform:
@@ -1682,7 +1835,7 @@ MonoBehaviour:
   health: {fileID: 11400000, guid: bed2e41fd29d348bdac1fd9e46184002, type: 2}
 --- !u!95 &656802775
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1699,7 +1852,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!60 &656802776
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1710,6 +1864,25 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -1733,6 +1906,7 @@ PolygonCollider2D:
       - {x: -0.2033186, y: -0.792679}
       - {x: 1.5285887, y: -0.8180961}
       - {x: 1.780003, y: 0.6657235}
+  m_UseDelaunayMesh: 0
 --- !u!1 &673657343
 GameObject:
   m_ObjectHideFlags: 0
@@ -1927,7 +2101,7 @@ Mesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  serializedVersion: 10
+  serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -2074,6 +2248,7 @@ Mesh:
     m_Center: {x: 0.0077498555, y: -0.00500001, z: 0}
     m_Extent: {x: 0.399, y: 0.417, z: 0}
   m_MeshUsageFlags: 0
+  m_CookingOptions: 30
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshMetrics[0]: 1
@@ -2091,7 +2266,7 @@ Mesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  serializedVersion: 10
+  serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -2238,6 +2413,7 @@ Mesh:
     m_Center: {x: -0.012000024, y: -0.0069999993, z: 0}
     m_Extent: {x: 0.20300001, y: 0.238, z: 0}
   m_MeshUsageFlags: 0
+  m_CookingOptions: 30
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshMetrics[0]: 1
@@ -2324,7 +2500,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2402,6 +2580,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -2416,6 +2600,25 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2435,6 +2638,7 @@ PolygonCollider2D:
       - {x: -0.2962501, y: 0.412}
       - {x: -0.39125013, y: -0.30900002}
       - {x: 0.28074992, y: -0.42200002}
+  m_UseDelaunayMesh: 0
 --- !u!23 &858371214
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2492,7 +2696,7 @@ Mesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  serializedVersion: 10
+  serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -2639,6 +2843,7 @@ Mesh:
     m_Center: {x: 0.09521431, y: 0.14314282, z: 0}
     m_Extent: {x: 0.86649996, y: 0.538, z: 0}
   m_MeshUsageFlags: 0
+  m_CookingOptions: 30
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshMetrics[0]: 1
@@ -2656,7 +2861,7 @@ Mesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  serializedVersion: 10
+  serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -2803,6 +3008,7 @@ Mesh:
     m_Center: {x: -0.003999993, y: 0.014749974, z: 0}
     m_Extent: {x: 0.4335, y: 0.114500016, z: 0}
   m_MeshUsageFlags: 0
+  m_CookingOptions: 30
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshMetrics[0]: 1
@@ -2953,7 +3159,7 @@ Mesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  serializedVersion: 10
+  serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -3100,6 +3306,7 @@ Mesh:
     m_Center: {x: 0.10649994, y: 0.0068333447, z: 0}
     m_Extent: {x: 0.49600002, y: 0.4275, z: 0}
   m_MeshUsageFlags: 0
+  m_CookingOptions: 30
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshMetrics[0]: 1
@@ -3237,7 +3444,7 @@ Mesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  serializedVersion: 10
+  serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -3384,6 +3591,7 @@ Mesh:
     m_Center: {x: -0.07028574, y: -0.12450001, z: 0}
     m_Extent: {x: 0.718, y: 0.4535, z: 0}
   m_MeshUsageFlags: 0
+  m_CookingOptions: 30
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshMetrics[0]: 1
@@ -3594,6 +3802,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -3608,6 +3822,25 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -3627,6 +3860,7 @@ PolygonCollider2D:
       - {x: -0.4195, y: 0.12924999}
       - {x: -0.43749997, y: -0.08675003}
       - {x: 0.4275, y: -0.09975004}
+  m_UseDelaunayMesh: 0
 --- !u!23 &1517948206
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3686,6 +3920,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Sprites/Default
   m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -3694,6 +3930,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -3813,6 +4050,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -3827,6 +4070,25 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -3849,6 +4111,7 @@ PolygonCollider2D:
       - {x: -0.78828573, y: 0.20899999}
       - {x: -0.7342857, y: -0.076000005}
       - {x: 0.38971427, y: -0.578}
+  m_UseDelaunayMesh: 0
 --- !u!23 &1543013327
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4139,6 +4402,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2132427240687901152, guid: a5fc3dbf38bec41299c28b353643e35b, type: 3}
@@ -4210,6 +4474,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 656802768}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2132427240687901157, guid: a5fc3dbf38bec41299c28b353643e35b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1726489480}
   m_SourcePrefab: {fileID: 100100000, guid: a5fc3dbf38bec41299c28b353643e35b, type: 3}
 --- !u!1 &1726489479 stripped
 GameObject:
@@ -4281,6 +4551,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -4295,6 +4571,25 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -4317,6 +4612,7 @@ PolygonCollider2D:
       - {x: -0.023285702, y: -0.10685718}
       - {x: -0.04228571, y: -0.32285714}
       - {x: 0.8067143, y: -0.39485717}
+  m_UseDelaunayMesh: 0
 --- !u!23 &1944158492
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4441,7 +4737,7 @@ Mesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  serializedVersion: 10
+  serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -4588,6 +4884,7 @@ Mesh:
     m_Center: {x: 0.042999953, y: -0.098333344, z: 0}
     m_Extent: {x: 0.57799995, y: 0.44349998, z: 0}
   m_MeshUsageFlags: 0
+  m_CookingOptions: 30
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshMetrics[0]: 1
@@ -4631,8 +4928,8 @@ MonoBehaviour:
   levelParameters:
   - {fileID: 11400000, guid: 85ef6a177af15461bae8440d528b6592, type: 2}
   - {fileID: 11400000, guid: 7eed26975689a45389434578d9f5fc19, type: 2}
-  - {fileID: 11400000, guid: 47c1dfc21ca444e01b1c44bc4448463d, type: 2}
   - {fileID: 11400000, guid: aa3721ff4c185475e8e238ceba34be36, type: 2}
+  - {fileID: 11400000, guid: 47c1dfc21ca444e01b1c44bc4448463d, type: 2}
   levelTimer: {fileID: 1340080138}
 --- !u!4 &2112483698
 Transform:

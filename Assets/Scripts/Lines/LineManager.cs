@@ -21,18 +21,18 @@ public class LineManager : MonoBehaviour
     private void Awake()
     {
         LevelEvents.OnLevelParamChanged += UpdateParams;
-        LevelTimer.OnLevelTimerComplete  += SetNextPlayerLineGoal;
+        LevelEvents.OnLevelTimerComplete  += SetPlayerCKPT;
     }
     private void OnDestroy() 
     {
         LevelEvents.OnLevelParamChanged -= UpdateParams;
-        LevelTimer.OnLevelTimerComplete  -= SetNextPlayerLineGoal;
+        LevelEvents.OnLevelTimerComplete  -= SetPlayerCKPT;
     }
 
-    private void SetNextPlayerLineGoal()
+    private void SetPlayerCKPT()
     {
-        Debug.Log("LineManager:SetNextPlayerLineGoal");
-        LevelSO.SetNewLineGoal(latestSpawnedLinePosition.x);
+        Debug.Log("LineManager:SetPlayerCKPT");
+        LevelSO.SetPlayerCKPT(latestSpawnedLinePosition.x);
     }
 
     private void UpdateParams(LevelParameters currentLevelParameters)

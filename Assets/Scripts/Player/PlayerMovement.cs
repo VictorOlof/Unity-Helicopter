@@ -20,10 +20,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float tiltSpeed;
     Vector3 currentEulerAngles;
 
-    // Explosion
-    Collider2D[] inExplosionRadius = null;
-    [SerializeField] private float explosionForceMulti = 5;
-    [SerializeField] private float explosionRadius = 5;
 
     // Sound
     private bool movingUpwards = false;
@@ -38,13 +34,11 @@ public class PlayerMovement : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Static;
 
         GameState.PlayerState = PlayerStates.WaitingToStart;
-        GameState.OnDeadState += HandleDeadState;
         LevelEvents.OnLevelParamChanged += UpdateSpeed;
     }
 
     private void OnDestroy() 
     {
-        GameState.OnDeadState -= HandleDeadState;
         LevelEvents.OnLevelParamChanged -= UpdateSpeed;
     }
 
@@ -53,13 +47,14 @@ public class PlayerMovement : MonoBehaviour
         playerSpeed = currentLevelParameters.playerSpeed;
     }
 
-    bool MovedTroughNextLevel()
+    private bool MovedTroughCKPT()
     {
         // todo - bool on levelmanager if nextlevel has occured.
         // if not, raise an startNextLevel event
         // let that event set bool to false again?
         // or let the LevelTimer do that
-        return (transform.position.x > LevelSO.playerLineGoalXPos && LevelSO.playerLineGoal == true);
+        return (transform.position.x > LevelSO.playerLineGoalXPos 
+            && LevelSO.playerLineGoal == true);
     }
 
 
@@ -69,10 +64,10 @@ public class PlayerMovement : MonoBehaviour
         {
             case PlayerStates.Playing:
                 TiltPlayer();
-                if (MovedTroughNextLevel())
+                if (MovedTroughCKPT())
                 {
-                    LevelEvents.InvokeNextLevelParam();
-                    LevelSO.StopLineGoal();
+                    LevelEvents.InvokeOnPlayerCKPT();
+                    LevelSO.RemovePlayerCKPT();
                 }
                 break;
         }
@@ -114,11 +109,6 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    private void HandleDeadState() 
-    {
-        //Explode();
-        // Invoke("LoadNewGameScene", (float)2); moved to exoplodeonclick
-    }
 
     private void MovePlayerRight(float speed)
     {
@@ -196,23 +186,6 @@ public class PlayerMovement : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
-    void Explode()
-    {
-        inExplosionRadius = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
-
-        foreach (Collider2D o in inExplosionRadius)
-        {
-            Rigidbody2D o_rigidbody = o.GetComponent<Rigidbody2D>();
-            if (o_rigidbody != null)
-            {
-                Vector2 distanceVector = o.transform.position - transform.position;
-                if (distanceVector.magnitude > 0)
-                {
-                    float explosionForce = explosionForceMulti / distanceVector.magnitude;
-                    o_rigidbody.AddForce(distanceVector.normalized * explosionForce);
-                }
-            }
-        }
-    }
+    
 
 }

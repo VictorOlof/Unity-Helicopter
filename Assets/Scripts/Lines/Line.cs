@@ -76,6 +76,7 @@ public class Line : MonoBehaviour
 
     private void UpdateParams(LevelParameters currentLevelParameters)
     {
+        Debug.Log("Line: UpdateParams");
         tunnelGapHeight = currentLevelParameters.tunnelGapHeight;
         tunnelGapHeightRandomness = currentLevelParameters.tunnelGapHeightRandomness;
     }

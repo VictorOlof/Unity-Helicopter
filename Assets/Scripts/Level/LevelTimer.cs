@@ -6,9 +6,6 @@ public class LevelTimer : MonoBehaviour
     private float currentTime = 0f;
     private bool isTimerRunning = false;
 
-    public delegate void LevelTimerEvent();
-    public static event LevelTimerEvent OnLevelTimerComplete; 
-
     void Awake()
     {
         GameState.OnDeadState += StopTimer;
@@ -29,7 +26,7 @@ public class LevelTimer : MonoBehaviour
             {
                 isTimerRunning = false;
                 currentTime = 0f;
-                OnLevelTimerComplete?.Invoke();
+                LevelEvents.InvokeLevelTimerComplete();
             }
         }
     }

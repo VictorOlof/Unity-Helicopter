@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private LevelParameters[] levelParameters;
     private LevelParameters currentLevelParameters;
     private int currentLevelIndex = 0; 
-    public LevelTimer levelTimer;
+    [SerializeField] private LevelTimer levelTimer;
 
     
     
@@ -17,18 +17,16 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log(levelParameters.GetType());
-
         currentLevelParameters = levelParameters[currentLevelIndex];
 
         GameState.OnPlayState += StartNextLevel;
-        LevelEvents.OnNextLevelParam += StartNextLevel;
+        LevelEvents.OnPlayerCKPT += StartNextLevel;
     }
 
     private void OnDestroy() 
     {
         GameState.OnPlayState -= StartNextLevel;
-        LevelEvents.OnNextLevelParam -= StartNextLevel;
+        LevelEvents.OnPlayerCKPT -= StartNextLevel;
     }
 
     public void StartNextLevel()
@@ -53,7 +51,6 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            // Invalid
             Debug.Log("Invalid currentLevelIndex");
         }
     }
@@ -62,57 +59,4 @@ public class LevelManager : MonoBehaviour
     {
         return currentLevelParameters;
     }
-
-
-
-    /*
-    private void Start()
-    {
-        levelManager = FindObjectOfType<LevelManager>();
-        if (levelManager == null)
-        {
-            Debug.LogError("LevelManager not found in the scene.");
-        }
-        
-        StartLevel(currentLevelIndex);
-        LevelTimer.OnTimerComplete += OnTimerComplete;
-
-        if (OneMoreLevel)
-        {
-            OnNewLevel?.Invoke();
-        }
-    }
-
-    private bool OneMoreLevel()
-    {
-        return (currentLevelIndex + 1) < levelManager.GetNumOfLevels();
-    }
-
-    private void OnDestroy()
-    {
-        LevelTimer.OnTimerComplete -= OnTimerComplete;
-    }
-
-    private void StartLevel(int levelIndex)
-    {
-        currentLevelParams = levelManager.GetCurrentLevelParameters(levelIndex);
-        levelTimer.StartTimer(currentLevelParams.levelDuration);
-    }
-
-    private void OnTimerComplete()
-    {
-        levelTimer.StopTimer();
-
-        if ((currentLevelIndex + 1) < levelManager.GetNumOfLevels())
-        {
-            currentLevelIndex++;
-            StartLevel(currentLevelIndex);
-        }
-        else
-        {
-            Debug.Log("All levels completed.");
-            // Handle game completion or restart here
-        }
-    }
-    */
 }

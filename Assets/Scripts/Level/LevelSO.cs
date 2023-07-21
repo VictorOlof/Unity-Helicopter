@@ -6,13 +6,13 @@ public class LevelSO : ScriptableObject
     public float playerLineGoalXPos;
     public bool playerLineGoal = false;
 
-    public void SetNewLineGoal(float xPosition)
+    public void SetPlayerCKPT(float xPosition)
     {
         playerLineGoalXPos = xPosition;
         playerLineGoal = true;
     }
 
-    public void StopLineGoal()
+    public void RemovePlayerCKPT()
     {
         playerLineGoal = false;
     }
