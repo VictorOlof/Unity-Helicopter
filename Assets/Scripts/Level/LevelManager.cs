@@ -5,58 +5,41 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private LevelParameters[] levelParameters;
-    private LevelParameters currentLevelParameters;
-    private int currentLevelIndex = 0; 
-    [SerializeField] private LevelTimer levelTimer;
-
+   // [SerializeField] private LevelParameters[] levelParameters;
+    //private LevelParameters currentLevelParameters;
     
-    
-     
-
+    [SerializeField] private LevelTimer levelTimer; 
+    // todo, find this in awake/start by accessing child
+    public LevelSO LevelSO;
 
     void Awake()
     {
-        currentLevelParameters = levelParameters[currentLevelIndex];
+        //LevelParameters currentLevelParameters = levelParameters[currentLevelIndex];
 
-        GameState.OnPlayState += StartNextLevel;
+        GameState.OnPlayState += SetLevelStart;
         LevelEvents.OnPlayerCKPT += StartNextLevel;
     }
 
     private void OnDestroy() 
     {
-        GameState.OnPlayState -= StartNextLevel;
+        GameState.OnPlayState -= SetLevelStart;
         LevelEvents.OnPlayerCKPT -= StartNextLevel;
+    }
+
+    private void SetLevelStart()
+    {
+        LevelParameters levelParameters = LevelSO.GetCurrentLevelParameters();
+        LevelEvents.InvokeOnNewLevel();
+        levelTimer.StartTimer(levelParameters.levelDuration);
     }
 
     public void StartNextLevel()
     {
-        if ((currentLevelIndex + 1) < levelParameters.Length)
-        {
-            Debug.Log("level: " + currentLevelIndex);
+        LevelSO.IncreaseCurrentLevelIndex(); // if return false, dont start timer?
+        LevelParameters levelParameters = LevelSO.GetCurrentLevelParameters();
 
-            currentLevelParameters = levelParameters[currentLevelIndex];
-            LevelEvents.InvokeLevelParamChanged(currentLevelParameters);
-            levelTimer.StartTimer(currentLevelParameters.levelDuration);
-
-            currentLevelIndex++;
-        }
-        else if ((currentLevelIndex + 1) == levelParameters.Length)
-        {
-            Debug.Log("End level: " + currentLevelIndex);
-
-            currentLevelParameters = levelParameters[currentLevelIndex];
-            LevelEvents.InvokeLevelParamChanged(currentLevelParameters);
-            // Game finished, crash into wall of squares? Huge explosion.
-        }
-        else
-        {
-            Debug.Log("Invalid currentLevelIndex");
-        }
+        LevelEvents.InvokeOnNewLevel();
+        levelTimer.StartTimer(levelParameters.levelDuration);
     }
 
-    public LevelParameters getCurrentLevelParameters()
-    {
-        return currentLevelParameters;
-    }
 }

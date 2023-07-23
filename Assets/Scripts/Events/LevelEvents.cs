@@ -3,6 +3,14 @@ using System;
 
 public static class LevelEvents
 {
+    public delegate void SetPlayerCKPT();
+    public static event SetPlayerCKPT OnSetPlayerCKPT;
+
+    public static void InvokeOnSetPlayerCKPT()
+    {
+        OnSetPlayerCKPT?.Invoke();
+    }
+
     public delegate void PlayerCKPT();
     public static event PlayerCKPT OnPlayerCKPT;
 
@@ -11,11 +19,11 @@ public static class LevelEvents
         OnPlayerCKPT?.Invoke();
     }
 
-    public delegate void NewLevelEvent(LevelParameters levelParameter);
-    public static event NewLevelEvent OnLevelParamChanged; 
-    public static void InvokeLevelParamChanged(LevelParameters currentLevelParameters)
+    public delegate void NewLevelEvent(); //LevelParameters currentLevelParameters
+    public static event NewLevelEvent OnNewLevel; 
+    public static void InvokeOnNewLevel() // LevelParameters currentLevelParameters
     {
-        OnLevelParamChanged?.Invoke(currentLevelParameters);
+        OnNewLevel?.Invoke(); //currentLevelParameters
     }
 
     public delegate void LevelTimerEvent();

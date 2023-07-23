@@ -20,24 +20,28 @@ public class LineManager : MonoBehaviour
 
     private void Awake()
     {
-        LevelEvents.OnLevelParamChanged += UpdateParams;
+        LevelEvents.OnNewLevel += UpdateMaxHeightFromLvlParam;
         LevelEvents.OnLevelTimerComplete  += SetPlayerCKPT;
     }
     private void OnDestroy() 
     {
-        LevelEvents.OnLevelParamChanged -= UpdateParams;
+        LevelEvents.OnNewLevel -= UpdateMaxHeightFromLvlParam;
         LevelEvents.OnLevelTimerComplete  -= SetPlayerCKPT;
     }
 
     private void SetPlayerCKPT()
     {
         Debug.Log("LineManager:SetPlayerCKPT");
+
+        
         LevelSO.SetPlayerCKPT(latestSpawnedLinePosition.x);
+        
     }
 
-    private void UpdateParams(LevelParameters currentLevelParameters)
+    private void UpdateMaxHeightFromLvlParam()
     {
-        maxHeightChange = currentLevelParameters.maxHeightChange;
+        LevelParameters levelParameters = LevelSO.GetCurrentLevelParameters();
+        maxHeightChange = levelParameters.maxHeightChange;
     }
     
     void Start()

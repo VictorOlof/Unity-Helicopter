@@ -20,12 +20,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float tiltSpeed;
     Vector3 currentEulerAngles;
 
-
     // Sound
     private bool movingUpwards = false;
 
     // Level
-    public float nextLevelPos = 100;
     public LevelSO LevelSO;
 
     void Awake()
@@ -34,29 +32,27 @@ public class PlayerMovement : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Static;
 
         GameState.PlayerState = PlayerStates.WaitingToStart;
-        LevelEvents.OnLevelParamChanged += UpdateSpeed;
+        LevelEvents.OnNewLevel += UpdateSpeedFromLvlParam;
     }
 
     private void OnDestroy() 
     {
-        LevelEvents.OnLevelParamChanged -= UpdateSpeed;
+        LevelEvents.OnNewLevel -= UpdateSpeedFromLvlParam;
     }
 
-    private void UpdateSpeed(LevelParameters currentLevelParameters)
+    private void UpdateSpeedFromLvlParam()
     {
-        playerSpeed = currentLevelParameters.playerSpeed;
+        LevelParameters levelParameters = LevelSO.GetCurrentLevelParameters();
+        playerSpeed = levelParameters.playerSpeed;
+
+        Debug.Log("PlayerMovement: OnNewLevel: UpdateSpeedFromLvlParam: " + playerSpeed);
     }
 
     private bool MovedTroughCKPT()
     {
-        // todo - bool on levelmanager if nextlevel has occured.
-        // if not, raise an startNextLevel event
-        // let that event set bool to false again?
-        // or let the LevelTimer do that
         return (transform.position.x > LevelSO.playerLineGoalXPos 
             && LevelSO.playerLineGoal == true);
     }
-
 
     void Update()
     {
@@ -101,11 +97,11 @@ public class PlayerMovement : MonoBehaviour
     void Start() {
         Application.targetFrameRate = 60;
 
-        LevelManager levelManager = FindObjectOfType<LevelManager>();
+        /*LevelManager levelManager = FindObjectOfType<LevelManager>();
         if (levelManager != null)
         {
             playerSpeed = levelManager.getCurrentLevelParameters().playerSpeed;
-        }
+        }*/
         
     }
 
@@ -150,7 +146,6 @@ public class PlayerMovement : MonoBehaviour
             Input.touchCount > 0;
     }
 
-
     private void TiltPlayer()
     {
         if (TouchInput() && currentEulerAngles.z <= 8)
@@ -185,7 +180,4 @@ public class PlayerMovement : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
     }
-
-    
-
 }

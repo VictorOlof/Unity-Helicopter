@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9df4459caf20449ba3f1b4d810b67d7, type: 3}
   m_Name: LevelSO
   m_EditorClassIdentifier: 
-  playerLineGoalXPos: 0
-  playerLineGoal: 0
+  levelParameters:
+  - {fileID: 11400000, guid: 85ef6a177af15461bae8440d528b6592, type: 2}
+  - {fileID: 11400000, guid: 7eed26975689a45389434578d9f5fc19, type: 2}
+  - {fileID: 11400000, guid: aa3721ff4c185475e8e238ceba34be36, type: 2}
+  - {fileID: 11400000, guid: 47c1dfc21ca444e01b1c44bc4448463d, type: 2}
+  currentLevelIndex: 3
+  playerLineGoalXPos: 306
+  playerLineGoal: 1

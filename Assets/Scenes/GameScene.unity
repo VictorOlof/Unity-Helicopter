@@ -1816,9 +1816,6 @@ MonoBehaviour:
   upForce: 30
   playerSpeed: 9
   tiltSpeed: 75
-  explosionForceMulti: 8
-  explosionRadius: 5
-  nextLevelPos: 0
   LevelSO: {fileID: 11400000, guid: 953ff367df72a4da595670006a4c73df, type: 2}
 --- !u!114 &656802774
 MonoBehaviour:
@@ -4925,12 +4922,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ed38a528b61432f84286a9d7f73ff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelParameters:
-  - {fileID: 11400000, guid: 85ef6a177af15461bae8440d528b6592, type: 2}
-  - {fileID: 11400000, guid: 7eed26975689a45389434578d9f5fc19, type: 2}
-  - {fileID: 11400000, guid: aa3721ff4c185475e8e238ceba34be36, type: 2}
-  - {fileID: 11400000, guid: 47c1dfc21ca444e01b1c44bc4448463d, type: 2}
   levelTimer: {fileID: 1340080138}
+  LevelSO: {fileID: 11400000, guid: 953ff367df72a4da595670006a4c73df, type: 2}
 --- !u!4 &2112483698
 Transform:
   m_ObjectHideFlags: 0

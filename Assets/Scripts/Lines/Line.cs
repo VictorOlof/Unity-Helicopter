@@ -21,6 +21,7 @@ public class Line : MonoBehaviour
 
     GameObject cameraGameObject;
     LineManager lineManagerScript;
+    public LevelSO levelSO;
 
     public Vector2 topLineTarget;
     void Awake()
@@ -56,8 +57,9 @@ public class Line : MonoBehaviour
             InvokeRepeating("MoveBottomLine", 0.025f, 0.025f);  
         }
 
-        LevelEvents.OnLevelParamChanged += UpdateParams;
+        //old LevelEvents.OnLevelParamChanged += UpdateParams;
         //LevelTimer.OnLevelTimerComplete += UpdateParams;
+        LevelEvents.OnSetPlayerCKPT += UpdateParams;
     }
 
     void OnDisable() 
@@ -67,18 +69,23 @@ public class Line : MonoBehaviour
         currentLineTopHeight = 1;
         currentLineBottomHeight = -1;
 
-        LevelEvents.OnLevelParamChanged -= UpdateParams;
+        //LevelEvents.OnLevelParamChanged -= UpdateParams;
         //LevelTimer.OnLevelTimerComplete -= UpdateParams;
+        LevelEvents.OnSetPlayerCKPT -= UpdateParams;
 
         // LevelManager.OnLevelParamChanged eventet invokar med levelparameter
         // todo - lagra denna currentLevelParameters i ett scriptableobject 
     }
 
-    private void UpdateParams(LevelParameters currentLevelParameters)
+    private void UpdateParams() //old LevelParameters currentLevelParameters)
     {
-        Debug.Log("Line: UpdateParams");
-        tunnelGapHeight = currentLevelParameters.tunnelGapHeight;
-        tunnelGapHeightRandomness = currentLevelParameters.tunnelGapHeightRandomness;
+        
+
+        LevelParameters levelParameters = levelSO.GetUpcomingLevelParameters();
+        tunnelGapHeight = levelParameters.tunnelGapHeight;
+        tunnelGapHeightRandomness = levelParameters.tunnelGapHeightRandomness;
+
+        Debug.Log("Line: OnSetPlayerCKPT, updating height: " + levelParameters.tunnelGapHeight);
     }
 
     void Update() 

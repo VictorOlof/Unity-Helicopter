@@ -7,20 +7,19 @@ public class Log : MonoBehaviour
 {
     void Awake()
     {
-
-        LevelEvents.OnLevelParamChanged += LogOnLevelParamChanged;
+        LevelEvents.OnNewLevel += LogOnNewLevel;
         LevelEvents.OnPlayerCKPT += LogOnPlayerCKPT;
     }
 
     private void OnDestroy() 
     {
-        LevelEvents.OnLevelParamChanged -= LogOnLevelParamChanged;
+        LevelEvents.OnNewLevel -= LogOnNewLevel;
         LevelEvents.OnPlayerCKPT -= LogOnPlayerCKPT;
     }
 
-    private void LogOnLevelParamChanged(LevelParameters currentLevelParameters)
+    private void LogOnNewLevel()
     {
-        Debug.Log("InvokeLevelParamChanged");
+        Debug.Log("InvokeOnNewLevel");
     }
 
     private void LogOnPlayerCKPT()

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34ca0a8686814483ca0361d369092587, type: 3}
   m_Name: LvlParm2
   m_EditorClassIdentifier: 
-  playerSpeed: 15
-  levelDuration: 2
-  maxHeightChange: 1
-  tunnelGapHeight: 6
-  tunnelGapHeightRandomness: 1
+  playerSpeed: 10
+  levelDuration: 7
+  maxHeightChange: 2
+  tunnelGapHeight: 15
+  tunnelGapHeightRandomness: 0
