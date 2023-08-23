@@ -4,13 +4,13 @@ using System.Collections;
 [RequireComponent(typeof(Explodable))]
 public class ExplodeOnClick : MonoBehaviour {
 
-	private Explodable _explodable;
-	private ExplosionForce ef;
+	private Explodable explodable;
+	private ExplosionForce explosionForce;
 
 	void Start()
 	{
-		_explodable = GetComponent<Explodable>();
-		ef = GameObject.FindObjectOfType<ExplosionForce>();
+		explodable = GetComponent<Explodable>();
+		explosionForce = GameObject.FindObjectOfType<ExplosionForce>();
 	}
 
 	void Awake()
@@ -25,8 +25,8 @@ public class ExplodeOnClick : MonoBehaviour {
 
 	void Explode()
 	{
-		_explodable.explode();
-		ef.doExplosion(transform.position);
+		explodable.explode();
+		explosionForce.DoExplosion(transform.position);
 	}
 
 	

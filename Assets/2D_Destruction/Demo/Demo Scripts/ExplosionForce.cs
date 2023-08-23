@@ -12,7 +12,7 @@ public class ExplosionForce : MonoBehaviour {
     /// create an explosion force
     /// </summary>
     /// <param name="position">location of the explosion</param>
-	public void doExplosion(Vector3 position){
+	public void DoExplosion(Vector3 position){
 		transform.localPosition = position;
 		StartCoroutine(waitAndExplode());
 	}
@@ -24,10 +24,12 @@ public class ExplosionForce : MonoBehaviour {
 	private IEnumerator waitAndExplode(){
 		yield return new WaitForFixedUpdate();
 		
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position,radius);
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius);
      
-		foreach(Collider2D coll in colliders){
-			if(coll.GetComponent<Rigidbody2D>()&&coll.name!="hero"){
+		foreach(Collider2D coll in colliders) 
+        {
+			if (coll.GetComponent<Rigidbody2D>() && coll.name!="heroo")
+            {
                 AddExplosionForce(coll.GetComponent<Rigidbody2D>(), force, transform.position, radius, upliftModifer);
 			}
 		}

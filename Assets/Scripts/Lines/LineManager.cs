@@ -16,38 +16,32 @@ public class LineManager : MonoBehaviour
     public int spawningHeight;
 
     public Vector2 latestSpawnedLinePosition;
-    public LevelSO LevelSO;
 
     private void Awake()
     {
-        LevelEvents.OnNewLevel += UpdateMaxHeightFromLvlParam;
+        LevelEvents.OnNewLevel += UpdateMaxHeightChange;
         LevelEvents.OnLevelTimerComplete  += SetPlayerCKPT;
     }
     private void OnDestroy() 
     {
-        LevelEvents.OnNewLevel -= UpdateMaxHeightFromLvlParam;
+        LevelEvents.OnNewLevel -= UpdateMaxHeightChange;
         LevelEvents.OnLevelTimerComplete  -= SetPlayerCKPT;
     }
 
     private void SetPlayerCKPT()
     {
-        Debug.Log("LineManager:SetPlayerCKPT");
-
-        
-        LevelSO.SetPlayerCKPT(latestSpawnedLinePosition.x);
-        
+        LevelEvents.InvokeOnSetPlayerCKPT(latestSpawnedLinePosition);
     }
 
-    private void UpdateMaxHeightFromLvlParam()
+    private void UpdateMaxHeightChange(LevelParameters levelParameters)
     {
-        LevelParameters levelParameters = LevelSO.GetCurrentLevelParameters();
+        
         maxHeightChange = levelParameters.maxHeightChange;
+        //ebug.Log("mmmm: ", maxHeightChange.ToString());
     }
     
     void Start()
     {
-        //todo UpdateParams(LevelManager.getCurrentLevelParameters());
-
         SpawnStartLines();
     }
 
@@ -55,11 +49,6 @@ public class LineManager : MonoBehaviour
     {
         for (int x = -21; x < (tunnelWidth - 21); x++)
         {
-            /*
-            newRandomHeight = UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
-            latestSpawnedLinePosition = new Vector2(x, newRandomHeight);
-            GameObject newline = SpawnLineObj(latestSpawnedLinePosition);
-            */
             SpawnNewLine();
         }
     }
@@ -69,7 +58,6 @@ public class LineManager : MonoBehaviour
         switch (GameState.PlayerState)
         {
             case PlayerStates.WaitingToStart:
-                //spawningHeight = UnityEngine.Random.Range((maxHeightChange / 2) * -1, (maxHeightChange / 2) + 1);
                 spawningHeight = UnityEngine.Random.Range(0, maxHeightChange +1);
                 break;
 

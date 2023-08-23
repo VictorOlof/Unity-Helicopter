@@ -24,7 +24,8 @@ public class PlayerMovement : MonoBehaviour
     private bool movingUpwards = false;
 
     // Level
-    public LevelSO LevelSO;
+    float lineCKPTXPos;
+    bool lineCKPT;
 
     void Awake()
     {
@@ -32,26 +33,40 @@ public class PlayerMovement : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Static;
 
         GameState.PlayerState = PlayerStates.WaitingToStart;
-        LevelEvents.OnNewLevel += UpdateSpeedFromLvlParam;
+
+        LevelEvents.OnSetPlayerCKPT += UpdateCKPT;
+        LevelEvents.OnNewLevel += UpdateSpeed;
     }
 
     private void OnDestroy() 
     {
-        LevelEvents.OnNewLevel -= UpdateSpeedFromLvlParam;
+        LevelEvents.OnSetPlayerCKPT -= UpdateCKPT;
+        LevelEvents.OnNewLevel -= UpdateSpeed;
     }
 
-    private void UpdateSpeedFromLvlParam()
+    private void UpdateSpeed(LevelParameters levelParameters)
     {
-        LevelParameters levelParameters = LevelSO.GetCurrentLevelParameters();
         playerSpeed = levelParameters.playerSpeed;
+    }
 
-        Debug.Log("PlayerMovement: OnNewLevel: UpdateSpeedFromLvlParam: " + playerSpeed);
+    private void UpdateCKPT(Vector2 latestSpawnedLinePosition)
+    {
+        lineCKPTXPos = latestSpawnedLinePosition.x;
+        lineCKPT = true;
     }
 
     private bool MovedTroughCKPT()
     {
-        return (transform.position.x > LevelSO.playerLineGoalXPos 
-            && LevelSO.playerLineGoal == true);
+        return (transform.position.x > lineCKPTXPos && lineCKPT == true);
+    }
+
+    void Start() 
+    {
+        Application.targetFrameRate = 60;
+        GameState.TriggerWaitingToStartStateEvent();
+
+        LevelParameters levelParameters = LevelManager.Instance.GetCurrentLevelParameters();
+        UpdateSpeed(levelParameters);
     }
 
     void Update()
@@ -63,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
                 if (MovedTroughCKPT())
                 {
                     LevelEvents.InvokeOnPlayerCKPT();
-                    LevelSO.RemovePlayerCKPT();
+                    lineCKPT = false;
                 }
                 break;
         }
@@ -74,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         switch (GameState.PlayerState)
         {
             case PlayerStates.WaitingToStart:
-                MovePlayerRight(playerSpeed / 3);
+                MovePlayerRight(playerSpeed);
                 if (TouchInput())
                 {
                     rb.bodyType = RigidbodyType2D.Dynamic;
@@ -93,18 +108,6 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
-
-    void Start() {
-        Application.targetFrameRate = 60;
-
-        /*LevelManager levelManager = FindObjectOfType<LevelManager>();
-        if (levelManager != null)
-        {
-            playerSpeed = levelManager.getCurrentLevelParameters().playerSpeed;
-        }*/
-        
-    }
-
 
     private void MovePlayerRight(float speed)
     {

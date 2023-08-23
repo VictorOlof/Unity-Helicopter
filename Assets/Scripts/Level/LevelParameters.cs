@@ -13,4 +13,7 @@ public class LevelParameters : ScriptableObject
     public int maxHeightChange = 2;
     public int tunnelGapHeight = 6;
     public int tunnelGapHeightRandomness = 0;
+
+    // Info
+    public string levelName = "Level 0";
 }

@@ -13,27 +13,24 @@ public static class GameState
 {
     public static PlayerStates PlayerState = PlayerStates.WaitingToStart;
 
-    public delegate void DeadStateHandler();
-    public static event DeadStateHandler OnDeadState;
-
-    public static void TriggerDeadStateEvent() 
+    public delegate void WaitStateHandler();
+    public static event WaitStateHandler OnWaitingToStartStateEvent;
+    public static void TriggerWaitingToStartStateEvent() 
     {
-        if (OnDeadState != null) 
-        {
-            OnDeadState();
-        }
+        OnWaitingToStartStateEvent?.Invoke();
     }
-
     
     public delegate void PlayStateHandler();
     public static event PlayStateHandler OnPlayState;
-
     public static void TriggerPlayStateEvent() 
     {
-        if (OnPlayState != null) 
-        {
-            OnPlayState();
-        }
+        OnPlayState?.Invoke();
     }
     
+    public delegate void DeadStateHandler();
+    public static event DeadStateHandler OnDeadState;
+    public static void TriggerDeadStateEvent() 
+    {
+        OnDeadState?.Invoke();
+    }
 }

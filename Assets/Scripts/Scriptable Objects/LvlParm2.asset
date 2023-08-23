@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: LvlParm2
   m_EditorClassIdentifier: 
   playerSpeed: 10
-  levelDuration: 7
-  maxHeightChange: 2
+  levelDuration: 2
+  maxHeightChange: 0
   tunnelGapHeight: 15
-  tunnelGapHeightRandomness: 0
+  tunnelGapHeightRandomness: 2
+  levelName: Level 2

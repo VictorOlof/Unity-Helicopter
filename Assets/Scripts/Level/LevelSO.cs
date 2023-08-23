@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelSO", menuName = "Level")]
 public class LevelSO : ScriptableObject
 {
+    /*
     // Levelparameters
     [SerializeField] private LevelParameters[] levelParameters;
     [SerializeField] private int currentLevelIndex = 0; 
@@ -36,7 +37,8 @@ public class LevelSO : ScriptableObject
 
         
     }
-
+    */
+    /*
 
     // PlayerCKPT
     public float playerLineGoalXPos;
@@ -54,4 +56,5 @@ public class LevelSO : ScriptableObject
     {
         playerLineGoal = false;
     }
+    */
 }

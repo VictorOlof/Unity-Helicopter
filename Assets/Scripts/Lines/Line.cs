@@ -8,25 +8,31 @@ using UnityEngine;
 /// </summary>
 public class Line : MonoBehaviour
 {
+    // Object references
     private GameObject bottomLine, topLine;
-    [SerializeField]
-    public int tunnelGapHeight = 20;
-    public int tunnelGapHeightRandomness = 0;
-    
-    public bool lineMovement = true;
+    private Camera cameraGameObject;
+    LineManager lineManagerScript;
 
+    // Parameters
+    [SerializeField] private int tunnelGapHeight = 20;
+    [SerializeField] private int tunnelGapHeightRandomness = 0;
+    
+    // Movement ...
+    public bool lineMovement = true;
     [SerializeField] private int lineTopHeight, lineBottomHeight;
     [SerializeField] private float currentLineTopHeight = 1;
     [SerializeField] private float currentLineBottomHeight = -1;
+    // new movements
+    public float duration = 1f;
+    private Vector3 initialPosition;
+    private Vector3 targetPosition;
+    private float startTime;
 
-    GameObject cameraGameObject;
-    LineManager lineManagerScript;
-    public LevelSO levelSO;
+    private bool runningFirstTime = true;
 
-    public Vector2 topLineTarget;
     void Awake()
     {
-        cameraGameObject = GameObject.Find("Main Camera");
+        cameraGameObject = Camera.main;
         topLine = gameObject.transform.GetChild(0).gameObject;
         bottomLine = gameObject.transform.GetChild(1).gameObject;
 
@@ -35,18 +41,25 @@ public class Line : MonoBehaviour
         lineManagerScript = (LineManager)lineManagerGameObject.GetComponent(typeof(LineManager));
     }
 
+    void Start()
+    {
+        
+    }
+
     void OnEnable() 
     {
+        if (runningFirstTime)
+        {
+            LevelParameters levelParameters = LevelManager.Instance.GetCurrentLevelParameters();
+            UpdateTunnelGap(levelParameters);
+            runningFirstTime = false;
+        }
+        
+        
         CalcTopBottomLinesHeight();
 
-        // TODO - check for state in playermovement / event
         if (GameState.PlayerState == PlayerStates.WaitingToStart)
         {
-            //tunnelGapHeight = 14;
-            //InvokeRepeating("MoveLines", 0.025f, 0.025f);
-            //topLine.transform.position    = new Vector2(topLine.transform.position.x,    (float) topLine.transform.position.y + (float) 3.0);
-            //bottomLine.transform.position = new Vector2(bottomLine.transform.position.x, (float) bottomLine.transform.position.y - (float) 3.0);
-
             SetTopBottomLinesHeight();
         }
         else if (GameState.PlayerState == PlayerStates.Playing)
@@ -57,9 +70,7 @@ public class Line : MonoBehaviour
             InvokeRepeating("MoveBottomLine", 0.025f, 0.025f);  
         }
 
-        //old LevelEvents.OnLevelParamChanged += UpdateParams;
-        //LevelTimer.OnLevelTimerComplete += UpdateParams;
-        LevelEvents.OnSetPlayerCKPT += UpdateParams;
+        LevelEvents.OnPrepNewLevelEvent += UpdateTunnelGap;
     }
 
     void OnDisable() 
@@ -69,23 +80,18 @@ public class Line : MonoBehaviour
         currentLineTopHeight = 1;
         currentLineBottomHeight = -1;
 
-        //LevelEvents.OnLevelParamChanged -= UpdateParams;
-        //LevelTimer.OnLevelTimerComplete -= UpdateParams;
-        LevelEvents.OnSetPlayerCKPT -= UpdateParams;
-
-        // LevelManager.OnLevelParamChanged eventet invokar med levelparameter
-        // todo - lagra denna currentLevelParameters i ett scriptableobject 
+        LevelEvents.OnPrepNewLevelEvent -= UpdateTunnelGap;
     }
 
-    private void UpdateParams() //old LevelParameters currentLevelParameters)
+    private void UpdateTunnelGap(LevelParameters levelParameters)
     {
-        
+        //denna metod kallas ej av LevelEvents.OnNewLevel 
+        // Eftersom den skapas under körning !!!
 
-        LevelParameters levelParameters = levelSO.GetUpcomingLevelParameters();
         tunnelGapHeight = levelParameters.tunnelGapHeight;
         tunnelGapHeightRandomness = levelParameters.tunnelGapHeightRandomness;
 
-        Debug.Log("Line: OnSetPlayerCKPT, updating height: " + levelParameters.tunnelGapHeight);
+        Debug.Log("Line: OnPrepNewLevelEvent, updating height: " + levelParameters.tunnelGapHeight);
     }
 
     void Update() 
@@ -98,12 +104,7 @@ public class Line : MonoBehaviour
 
         if (GameState.PlayerState == PlayerStates.Playing)
         {
-            //Vector2 targetPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + lineTopHeight + 10);
-            ///targetObject = new GameObject("Target");
-            //targetObject.transform.position = targetPosition;
-
-            //topLine.transform.localPosition = Vector3.Lerp(topLine.transform.localPosition, topLineTarget, 2 * Time.deltaTime);
-            //Vector2.MoveTowards(topLine.transform.localPosition, topLineTarget.localPosition, 2 * Time.deltaTime);
+            //...
         }
     }
 
@@ -116,8 +117,6 @@ public class Line : MonoBehaviour
 
         lineTopHeight    += UnityEngine.Random.Range(0, tunnelGapHeightRandomness +1);
         lineBottomHeight += (UnityEngine.Random.Range(0, tunnelGapHeightRandomness +1)) * -1;
-
-        //topLineTarget = new Vector2(transform.localPosition.x, (transform.localPosition.y + lineTopHeight));
     }
 
     void SetTopBottomLinesHeight()
@@ -129,7 +128,10 @@ public class Line : MonoBehaviour
     bool IfOutsideCameraLeft()
     {
         // TODO: Check if outside camera to left TODO: instead of -25, subtract half camera size
-        return (transform.position.x <= cameraGameObject.transform.position.x - 25);
+        //return (transform.position.x <= cameraGameObject.transform.position.x - 25);
+        Vector3 linePosition = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
+        Vector3 objectScreenPosition = cameraGameObject.WorldToScreenPoint(linePosition);
+        return objectScreenPosition.x < 0;
     }
 
     
