@@ -4,11 +4,11 @@ Helicopter game made for mobile
 ### LevelEvents
 - OnSetPlayerCKPT
  
-  Invokes by LineManager when timer is finished.
+  Invokes by LineManager when OnLevelTimerComplete-event occur.
 
 - OnPrepNewLevelEvent (LevelParameters levelParameters)
 
-  Invokes by LevelManager when checkpoint is set.
+  Invokes by LevelManager when OnSetPlayerCKPT-event occur.
   Sends LevelParameters for the upcoming level.
 
 - OnPlayerCKPT
@@ -17,8 +17,10 @@ Helicopter game made for mobile
   
 - OnNewLevel (LevelParameters levelParameters)
 
-  Invokes by LevelManager when event above occur.
+  Invokes by LevelManager when OnPlayerCKPT-event occur.
   Sends LevelParameters for the current level.
+
+  LevelManager starts a new timer.
  
 - OnLevelTimerComplete 
 
