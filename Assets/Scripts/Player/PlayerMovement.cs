@@ -30,7 +30,10 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.bodyType = RigidbodyType2D.Static;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        //rb.mass = 0;
+        //rb.gravityScale = 0;
+        //rb.angularDrag = 0;
 
         GameState.PlayerState = PlayerStates.WaitingToStart;
 
@@ -62,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start() 
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 120;
         GameState.TriggerWaitingToStartStateEvent();
 
         LevelParameters levelParameters = LevelManager.Instance.GetCurrentLevelParameters();
@@ -73,8 +76,20 @@ public class PlayerMovement : MonoBehaviour
     {
         switch (GameState.PlayerState)
         {
+            case PlayerStates.WaitingToStart:
+                //MovePlayerRight(playerSpeed);
+                //MovePlayerRight(playerSpeed);
+                break;
+
             case PlayerStates.Playing:
-                TiltPlayer();
+                //MovePlayerRight(playerSpeed);
+
+                //rb.mass = 0.012f;
+                //rb.gravityScale = 0.05f;
+                //rb.angularDrag = 5f;
+                
+                PlayHelicopterSound();
+                //
                 if (MovedTroughCKPT())
                 {
                     LevelEvents.InvokeOnPlayerCKPT();
@@ -90,6 +105,7 @@ public class PlayerMovement : MonoBehaviour
         {
             case PlayerStates.WaitingToStart:
                 MovePlayerRight(playerSpeed);
+
                 if (TouchInput())
                 {
                     rb.bodyType = RigidbodyType2D.Dynamic;
@@ -99,19 +115,25 @@ public class PlayerMovement : MonoBehaviour
                 break;
 
             case PlayerStates.Playing:
-                PlayHelicopterSound();
                 MovePlayerRight(playerSpeed);
+                
+                TiltPlayer();
                 if (TouchInput())
                 {
                     MovePlayerUp();
                 }
+
+                
+                
+                
                 break;
         }
     }
 
     private void MovePlayerRight(float speed)
     {
-        transform.position += new Vector3(speed * Time.deltaTime, 0);
+        //transform.position += new Vector3(speed * Time.deltaTime, 0);
+        rb.velocity = new Vector2(speed, rb.velocity.y);
     }
 
     private void PlayHelicopterSound()

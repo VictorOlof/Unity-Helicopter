@@ -11,7 +11,6 @@ public class LineManager : MonoBehaviour
 {
     [SerializeField] private int tunnelWidth;
     [SerializeField] public int maxHeightChange = 2;
-    [SerializeField] GameObject lineParent;
     public int newRandomHeight;
     public int spawningHeight;
 
@@ -19,12 +18,13 @@ public class LineManager : MonoBehaviour
 
     private void Awake()
     {
-        LevelEvents.OnNewLevel += UpdateMaxHeightChange;
+        LevelEvents.OnPrepNewLevelEvent += UpdateMaxHeightChange;
+        // tidigare onNewLevel
         LevelEvents.OnLevelTimerComplete  += SetPlayerCKPT;
     }
     private void OnDestroy() 
     {
-        LevelEvents.OnNewLevel -= UpdateMaxHeightChange;
+        LevelEvents.OnPrepNewLevelEvent -= UpdateMaxHeightChange;
         LevelEvents.OnLevelTimerComplete  -= SetPlayerCKPT;
     }
 
@@ -35,19 +35,20 @@ public class LineManager : MonoBehaviour
 
     private void UpdateMaxHeightChange(LevelParameters levelParameters)
     {
-        
         maxHeightChange = levelParameters.maxHeightChange;
-        //ebug.Log("mmmm: ", maxHeightChange.ToString());
     }
     
     void Start()
     {
+        LevelParameters levelParameters = LevelManager.Instance.GetCurrentLevelParameters();
+        UpdateMaxHeightChange(levelParameters);
+
         SpawnStartLines();
     }
 
     void SpawnStartLines()
     {
-        for (int x = -21; x < (tunnelWidth - 21); x++)
+        for (int x = 0; x < tunnelWidth; x++)
         {
             SpawnNewLine();
         }
@@ -77,7 +78,8 @@ public class LineManager : MonoBehaviour
         if (newlineObj != null)
         {
             newlineObj.transform.localPosition = spawnPosition;
-            newlineObj.transform.parent = gameObject.transform;
+            newlineObj.transform.position = spawnPosition;
+            //newlineObj.transform.parent = gameObject.transform;
             newlineObj.SetActive(true);
         }
     }

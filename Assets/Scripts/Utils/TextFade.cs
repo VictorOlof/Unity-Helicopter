@@ -6,9 +6,11 @@ using TMPro;
 
 public class TextFade : MonoBehaviour
 {
-    public float duration = 0.35f;
+    public float fadeOutTime = 0.35f;
+    public float displayTextDelay = 0;
 
     private TextMeshPro textMeshPro;
+    private string text;
 
     void Awake()
     {
@@ -18,7 +20,15 @@ public class TextFade : MonoBehaviour
     private void Start()
     {
         textMeshPro = GetComponent<TextMeshPro>();
-        
+
+        text = textMeshPro.text;
+        textMeshPro.text = "";
+        Invoke("SetText", displayTextDelay);
+    }
+
+    private void SetText()
+    {
+        textMeshPro.text = text;
     }
 
     private void OnDestroy() 
@@ -37,10 +47,10 @@ public class TextFade : MonoBehaviour
         float elapsedTime = 0.0f;
         Color initialColor = textMeshPro.color;
 
-        while (elapsedTime < duration)
+        while (elapsedTime < fadeOutTime)
         {
             elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / duration);
+            float t = Mathf.Clamp01(elapsedTime / fadeOutTime);
             Color newColor = new Color(initialColor.r, initialColor.g, initialColor.b, 1.0f - t);
             textMeshPro.color = newColor;
             yield return null;

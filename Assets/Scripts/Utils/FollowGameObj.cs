@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowObjInWaitingToStart : MonoBehaviour
+public class FollowGameObj : MonoBehaviour
 {
-    public static PlayerStates PlayerState = PlayerStates.WaitingToStart;
-    public GameObject obj;
+    //public static PlayerStates PlayerState = PlayerStates.WaitingToStart;
+    public GameObject gameObjectToFollow;
 
     /*
     void Awake()
@@ -22,9 +22,10 @@ public class FollowObjInWaitingToStart : MonoBehaviour
     void Update()
     {
         
-        if (GameState.PlayerState == PlayerStates.WaitingToStart && obj != null)
+        if (gameObjectToFollow != null)
         {
-            transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y, 11);
+            // todo change Zpos? better solution?
+            transform.position = new Vector3(gameObjectToFollow.transform.position.x, gameObjectToFollow.transform.position.y, 11);
             //transform.transform.SetParent(null);
         }
         

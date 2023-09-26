@@ -100,8 +100,7 @@ MonoBehaviour:
   lineBottomHeight: 0
   currentLineTopHeight: 1
   currentLineBottomHeight: -1
-  levelSO: {fileID: 11400000, guid: 953ff367df72a4da595670006a4c73df, type: 2}
-  topLineTarget: {x: 0, y: 0}
+  duration: 1
 --- !u!1 &6584232829895341609
 GameObject:
   m_ObjectHideFlags: 0

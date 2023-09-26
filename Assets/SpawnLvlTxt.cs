@@ -24,7 +24,6 @@ public class SpawnLvlTxt : MonoBehaviour
 
     void UpdateTxt(LevelParameters levelParameters)
     {
-        Debug.Log("SpawnLvlTxt: UpdateTxt");
         textMeshPro.text = levelParameters.levelName;
         LevelEvents.OnPrepNewLevelEvent -= UpdateTxt;
     }

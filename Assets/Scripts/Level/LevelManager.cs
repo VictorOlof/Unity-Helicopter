@@ -54,12 +54,8 @@ public class LevelManager : MonoBehaviour
 
     private void OnEnable()
     {
-        // Load current saved level
+        // Load current saved level index
         currentLevelIndex = PlayerPrefs.GetInt("CurrentLevelIndex", 0);
-        Debug.Log("------");
-        Debug.Log(currentLevelIndex);
-        LevelParameters levelParameters = this.GetLevelParameters(currentLevelIndex, currentLevelParamIndex);
-        //LevelEvents.InvokeOnNewLevel(levelParameters);
     }
 
     private void SetLevelZero()

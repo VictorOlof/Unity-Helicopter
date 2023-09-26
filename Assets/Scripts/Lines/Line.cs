@@ -10,6 +10,7 @@ public class Line : MonoBehaviour
 {
     // Object references
     private GameObject bottomLine, topLine;
+    private GameObject player;
     private Camera cameraGameObject;
     LineManager lineManagerScript;
 
@@ -17,16 +18,12 @@ public class Line : MonoBehaviour
     [SerializeField] private int tunnelGapHeight = 20;
     [SerializeField] private int tunnelGapHeightRandomness = 0;
     
-    // Movement ...
-    public bool lineMovement = true;
+    // Movement
     [SerializeField] private int lineTopHeight, lineBottomHeight;
     [SerializeField] private float currentLineTopHeight = 1;
     [SerializeField] private float currentLineBottomHeight = -1;
-    // new movements
-    public float duration = 1f;
-    private Vector3 initialPosition;
-    private Vector3 targetPosition;
-    private float startTime;
+    [SerializeField] private bool hasEnteredCameraView;
+    [SerializeField] private bool movementStarted;
 
     private bool runningFirstTime = true;
 
@@ -41,11 +38,6 @@ public class Line : MonoBehaviour
         lineManagerScript = (LineManager)lineManagerGameObject.GetComponent(typeof(LineManager));
     }
 
-    void Start()
-    {
-        
-    }
-
     void OnEnable() 
     {
         if (runningFirstTime)
@@ -55,21 +47,16 @@ public class Line : MonoBehaviour
             runningFirstTime = false;
         }
         
-        
         CalcTopBottomLinesHeight();
 
         if (GameState.PlayerState == PlayerStates.WaitingToStart)
         {
             SetTopBottomLinesHeight();
-        }
-        else if (GameState.PlayerState == PlayerStates.Playing)
-        {
-            //SetTopBottomLinesHeight();
-            
-            InvokeRepeating("MoveTopLine", 0.025f, 0.025f);
-            InvokeRepeating("MoveBottomLine", 0.025f, 0.025f);  
+
+            movementStarted = true;
         }
 
+        // Events
         LevelEvents.OnPrepNewLevelEvent += UpdateTunnelGap;
     }
 
@@ -77,37 +64,55 @@ public class Line : MonoBehaviour
     {
         topLine.transform.localPosition    = new Vector2(topLine.transform.localPosition.x,    (float) 1);
         bottomLine.transform.localPosition = new Vector2(bottomLine.transform.localPosition.x, (float) -1);
-        currentLineTopHeight = 1;
+        currentLineTopHeight    = 1;
         currentLineBottomHeight = -1;
 
         LevelEvents.OnPrepNewLevelEvent -= UpdateTunnelGap;
-    }
 
+        CancelInvoke("MoveTopLine");
+        CancelInvoke("MoveBottomLine");
+
+        movementStarted = false;
+        hasEnteredCameraView = false;
+    }
+    
+    void Start()
+    {
+        player = GameObject.Find("Player");
+    }
     private void UpdateTunnelGap(LevelParameters levelParameters)
     {
-        //denna metod kallas ej av LevelEvents.OnNewLevel 
-        // Eftersom den skapas under körning !!!
-
         tunnelGapHeight = levelParameters.tunnelGapHeight;
         tunnelGapHeightRandomness = levelParameters.tunnelGapHeightRandomness;
-
-        Debug.Log("Line: OnPrepNewLevelEvent, updating height: " + levelParameters.tunnelGapHeight);
     }
 
     void Update() 
     {
-        if (IfOutsideCameraLeft())
+        if (IfPosOutsideCameraLeft())
         {
             gameObject.SetActive(false);
             lineManagerScript.SpawnNewLine();
         }
 
-        if (GameState.PlayerState == PlayerStates.Playing)
+        if (!IfPosOutsideCameraRight())
         {
-            //...
+            hasEnteredCameraView = true;
+        }
+
+        if (!movementStarted && hasEnteredCameraView && (GameState.PlayerState == PlayerStates.Playing))
+        {
+            InvokeRepeating("MoveTopLine", 0.025f, 0.025f);
+            InvokeRepeating("MoveBottomLine", 0.025f, 0.025f);
+            movementStarted = true;
+        }
+        
+        if (IfPosLeftPlayer() && movementStarted)
+        {
+            InvokeRepeating("MoveTopLineReverse", 0.025f, 0.025f);
+            InvokeRepeating("MoveBottomLineReverse", 0.025f, 0.025f);
+            movementStarted = false;
         }
     }
-
 
     void CalcTopBottomLinesHeight()
     {
@@ -125,15 +130,27 @@ public class Line : MonoBehaviour
         bottomLine.transform.localPosition = new Vector2(bottomLine.transform.localPosition.x, (float) lineBottomHeight);
     }
 
-    bool IfOutsideCameraLeft()
+    bool IfPosLeftPlayer()
     {
-        // TODO: Check if outside camera to left TODO: instead of -25, subtract half camera size
-        //return (transform.position.x <= cameraGameObject.transform.position.x - 25);
+        if (player != null)
+        {
+            return transform.position.x -1 < player.transform.position.x;
+        }
+        return false;
+    }
+
+    bool IfPosOutsideCameraRight()
+    {
+        Vector3 objectScreenPosition = cameraGameObject.WorldToScreenPoint(transform.position);
+        return objectScreenPosition.x > Screen.width;
+    }
+
+    bool IfPosOutsideCameraLeft()
+    {
         Vector3 linePosition = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
         Vector3 objectScreenPosition = cameraGameObject.WorldToScreenPoint(linePosition);
         return objectScreenPosition.x < 0;
     }
-
     
     void MoveTopLine() {
         // Todo change movement method
@@ -141,6 +158,10 @@ public class Line : MonoBehaviour
         {
             currentLineTopHeight += (float) 0.05;
             topLine.transform.localPosition    = new Vector2(topLine.transform.localPosition.x,       (float) topLine.transform.localPosition.y + (float) 0.05);
+        }
+        else
+        {
+            CancelInvoke("MoveTopLine");
         }
     }
 
@@ -151,6 +172,35 @@ public class Line : MonoBehaviour
             currentLineBottomHeight -= (float) 0.05;
             bottomLine.transform.localPosition = new Vector2(bottomLine.transform.localPosition.x,    (float) bottomLine.transform.localPosition.y - (float) 0.05);
         }
+        else
+        {
+            CancelInvoke("MoveBottomLine");
+        }
     }
-    
+
+    void MoveTopLineReverse() {
+        // Todo change movement method
+        if (currentLineTopHeight > lineTopHeight)
+        {
+            currentLineTopHeight -= 0.05f; // Subtraction instead of addition
+            topLine.transform.localPosition = new Vector2(topLine.transform.localPosition.x, topLine.transform.localPosition.y - 0.05f); // Subtract 0.05f
+        }
+        else
+        {
+            CancelInvoke("MoveTopLineReverse");
+        }
+    }
+
+    void MoveBottomLineReverse() {
+        // Todo change movement method
+        if (currentLineBottomHeight < lineBottomHeight)
+        {
+            currentLineBottomHeight -= (float) 0.05;
+            bottomLine.transform.localPosition = new Vector2(bottomLine.transform.localPosition.x,    (float) bottomLine.transform.localPosition.y + (float) 0.05);
+        }
+        else
+        {
+            CancelInvoke("MoveBottomLineReverse");
+        }
+    }
 }

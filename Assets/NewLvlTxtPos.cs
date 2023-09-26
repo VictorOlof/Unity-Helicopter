@@ -23,8 +23,6 @@ public class NewLvlTxtPos : MonoBehaviour
 
     void UpdatePositionOnce(Vector2 latestSpawnedLinePosition)
     {
-        Debug.Log("NewLvlTxtPos: UpdatePosition!!!!!!!!!!!!!!");
-
         Vector2 newPosition = transform.position;
         newPosition.x = latestSpawnedLinePosition.x;
         newPosition.y = latestSpawnedLinePosition.y;

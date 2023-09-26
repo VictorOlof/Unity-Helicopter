@@ -12,13 +12,7 @@ public static class LevelEvents
         OnSetPlayerCKPT?.Invoke(latestSpawnedLinePosition);
     }
 
-    public delegate void PlayerCKPT();
-    public static event PlayerCKPT OnPlayerCKPT;
-
-    public static void InvokeOnPlayerCKPT()
-    {
-        OnPlayerCKPT?.Invoke();
-    }
+    
 
     public delegate void PrepNewLevelEvent(LevelParameters levelParameters);
     public static event PrepNewLevelEvent OnPrepNewLevelEvent;
@@ -26,6 +20,14 @@ public static class LevelEvents
     public static void InvokeOnPrepNewLevelEvent(LevelParameters levelParameters)
     {
         OnPrepNewLevelEvent?.Invoke(levelParameters);
+    }
+
+    public delegate void PlayerCKPT();
+    public static event PlayerCKPT OnPlayerCKPT;
+
+    public static void InvokeOnPlayerCKPT()
+    {
+        OnPlayerCKPT?.Invoke();
     }
 
     public delegate void NewLevelEvent(LevelParameters levelParameters);

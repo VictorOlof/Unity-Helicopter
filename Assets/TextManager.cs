@@ -8,15 +8,14 @@ public class TextManager : MonoBehaviour
 
     private void SpawnLvlTxt()
     {
-        Debug.Log("TextManager: OnWaitingToStart->SpawnLvlTxt");
         SpawnLvlTxt(Vector2.zero);
     }
     
     private void SpawnLvlTxt(Vector2 latestSpawnedLinePosition)
     {
-        Debug.Log("TextManager: SpawnLvlTxt: " + latestSpawnedLinePosition.x);
-
-        GameObject gameObjectLvlTxt = Instantiate(currentLevelText, latestSpawnedLinePosition, Quaternion.identity);
+        // Todo - better solution here for pos11?
+        Vector3 newPos = new Vector3(latestSpawnedLinePosition.x, latestSpawnedLinePosition.y, 11);
+        GameObject gameObjectLvlTxt = Instantiate(currentLevelText, newPos, Quaternion.identity);
     }
 
     void OnEnable()

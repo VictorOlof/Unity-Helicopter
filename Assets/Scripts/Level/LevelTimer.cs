@@ -33,14 +33,12 @@ public class LevelTimer : MonoBehaviour
 
     public void StartTimer(float time)
     {
-        Debug.Log("LevelTimer:StartTimer time : " + time);
         timeLimit = time;
         isTimerRunning = true;
     }
 
     public void StopTimer()
     {
-        Debug.Log("LevelTimer:StopTimer");
         isTimerRunning = false;
         currentTime = 0f;
     }

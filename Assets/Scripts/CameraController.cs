@@ -10,28 +10,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform player;
     private GameObject targetObj;
 
-    private void LateUpdate()
+    private void Update()
     {
-        // Follow player
-        if (player != null)
-        {
-            transform.position = new Vector3(player.position.x + 13, player.position.y, transform.position.z);
-        }
-        else
-        {
-            targetObj = GameObject.Find("Player piece body");
-            if (targetObj == null)
-            {
-                Debug.LogError("Could not find object with name ");
-            }
-            else
-            {
-                transform.position = new Vector3(targetObj.transform.position.x + 13, targetObj.transform.position.y, transform.position.z);
-            }
-            
-        }
-        
-        // Camera.main.transform.LookAt(target.transform); TODO?
+        transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
     }
 
     void Start()
