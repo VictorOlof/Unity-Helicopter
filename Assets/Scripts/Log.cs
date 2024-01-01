@@ -24,26 +24,26 @@ public class Log : MonoBehaviour
 
     private void LogOnSetPlayerCKPT(Vector2 _)
     {
-        Debug.Log("LogOnSetPlayerCKPT");
+        //Debug.Log("LogOnSetPlayerCKPT");
     }
 
     private void LogOnPlayerCKPT()
     {
-        Debug.Log("LogOnPlayerCKPT");
+        //Debug.Log("LogOnPlayerCKPT");
     }
 
     private void LogOnPrepNewLevelEvent(LevelParameters levelParameters)
     {
-        Debug.Log("LogOnPrepNewLevelEvent levelDuration: " + levelParameters.levelDuration);
+        //Debug.Log("LogOnPrepNewLevelEvent levelDuration: " + levelParameters.levelDuration);
     }
 
     private void LogOnNewLevel(LevelParameters levelParameters)
     {
-        Debug.Log("LogOnNewLevel levelDuration: " + levelParameters.levelDuration);
+        //Debug.Log("LogOnNewLevel levelDuration: " + levelParameters.levelDuration);
     }
 
     private void LogOnLevelTimerComplete()
     {
-        Debug.Log("LogOnLevelTimerComplete");
+        //Debug.Log("LogOnLevelTimerComplete");
     }
 }

@@ -95,6 +95,9 @@ public class PlayerMovement : MonoBehaviour
                     LevelEvents.InvokeOnPlayerCKPT();
                     lineCKPT = false;
                 }
+
+                Debug.Log("Latest event type: " + LevelEvents.LatestEventType);
+
                 break;
         }
     }
