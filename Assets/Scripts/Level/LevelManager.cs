@@ -75,9 +75,13 @@ public class LevelManager : MonoBehaviour
             foreach (LevelParameters levelParameters in level.levelParameters)
             {
                 totalDuration += levelParameters.levelDuration;
+
+                totalDuration += 4f; // Add 4 seconds for the checkpoint
             }
 
-            //totalDuration += 4f; // Add 4 seconds for the checkpoint
+            totalDuration -= 4f;
+
+            
         }
 
         //totalDuration += 4f; // Add 4 seconds for the checkpoint
