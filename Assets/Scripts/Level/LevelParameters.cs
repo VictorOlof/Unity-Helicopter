@@ -14,6 +14,9 @@ public class LevelParameters : ScriptableObject
     public int tunnelGapHeight = 6;
     public int tunnelGapHeightRandomness = 0;
 
+    // Squares
+    public string squareColor = "black";
+
     // Info
     public string levelName = "Level 0";
 }

@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f14cd2737e575432e86afafd1b3118c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  square: {fileID: 3483298675060914152, guid: ba57dcfb70a3f4231b4eadc05775a2cc, type: 3}
+  square: {fileID: 505625836002427031, guid: 73d4acc46b5a04044a6b559c4a8ac886, type: 3}
   squareLineHeight: 25
   spawningDirection: 1
 --- !u!1 &3120204882587012292
@@ -95,12 +95,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tunnelGapHeight: 12
   tunnelGapHeightRandomness: 0
-  lineMovement: 1
   lineTopHeight: 0
   lineBottomHeight: 0
   currentLineTopHeight: 1
   currentLineBottomHeight: -1
-  duration: 1
+  linesMovementStarted: 0
+  topLineTargetPosition: {x: 0, y: 0, z: 0}
+  moveDuration: 1
 --- !u!1 &6584232829895341609
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,6 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f14cd2737e575432e86afafd1b3118c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  square: {fileID: 3483298675060914152, guid: ba57dcfb70a3f4231b4eadc05775a2cc, type: 3}
+  square: {fileID: 505625836002427031, guid: 73d4acc46b5a04044a6b559c4a8ac886, type: 3}
   squareLineHeight: 25
   spawningDirection: 0

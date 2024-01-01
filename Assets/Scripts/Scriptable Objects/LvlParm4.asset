@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: LvlParm4
   m_EditorClassIdentifier: 
   playerSpeed: 10
-  levelDuration: 5
-  maxHeightChange: 2
-  tunnelGapHeight: 15
+  levelDuration: 4
+  maxHeightChange: 0
+  tunnelGapHeight: 8
   tunnelGapHeightRandomness: 0
-  levelName: Level 4
+  squareColor: black
+  levelName: Level 2.2

@@ -15,6 +15,6 @@ MonoBehaviour:
   playerSpeed: 8
   levelDuration: 2
   maxHeightChange: 2
-  tunnelGapHeight: 14
-  tunnelGapHeightRandomness: 0
-  levelName: Level 3
+  tunnelGapHeight: 10
+  tunnelGapHeightRandomness: 2
+  levelName: Level 2

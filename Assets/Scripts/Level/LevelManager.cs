@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private LevelTimer levelTimer; // todo, find this in awake/start by accessing child
 
     public static LevelManager Instance { get; private set; }
+
     private void Awake()
     {
         if (Instance == null)
@@ -31,17 +32,11 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject); // Destroy any additional instances
         }
 
-
         //GameState.OnWaitingToStartStateEvent += SetLevelZero;
         GameState.OnPlayState       += SetLevelStart;
 
         LevelEvents.OnSetPlayerCKPT += InvokeOnPrepNewLevelEvent;
         LevelEvents.OnPlayerCKPT    += StartNextLevel;
-    }
-
-    public LevelParameters GetCurrentLevelParameters()
-    {
-        return this.GetLevelParameters(currentLevelIndex, currentLevelParamIndex);
     }
 
     private void OnDestroy() 
@@ -50,6 +45,64 @@ public class LevelManager : MonoBehaviour
 
         LevelEvents.OnSetPlayerCKPT -= InvokeOnPrepNewLevelEvent;
         LevelEvents.OnPlayerCKPT    -= StartNextLevel;
+    }
+
+    /// <summary>
+    /// Returns the LevelParameters object for the current level.
+    /// </summary>
+    /// <returns>The LevelParameters object for the current level.</returns>
+    public LevelParameters GetCurrentLevelParameters()
+    {
+        return this.GetLevelParameters(currentLevelIndex, currentLevelParamIndex);
+    }
+
+    public LevelParameters GetNextLevelParameters()
+    {
+        (int levelIndex, int levelParamIndex) = this.FindNextLevelParametersPos(currentLevelIndex, currentLevelParamIndex);
+        return this.GetLevelParameters(levelIndex, levelParamIndex);
+    }
+
+    /// <summary>
+    /// Calculates the total duration of all levels.
+    /// </summary>
+    /// <returns>The total duration of all levels.</returns>
+    public float GetAllLevelDurations()
+    {
+        float totalDuration = 0f;
+
+        foreach (Level level in levels)
+        {
+            foreach (LevelParameters levelParameters in level.levelParameters)
+            {
+                totalDuration += levelParameters.levelDuration;
+            }
+
+            //totalDuration += 4f; // Add 4 seconds for the checkpoint
+        }
+
+        //totalDuration += 4f; // Add 4 seconds for the checkpoint
+
+
+        return totalDuration;
+    }
+
+    /// <summary>
+    /// Calculates the total duration of all levels up to the current level.
+    /// </summary>
+    /// <returns>The total duration of all levels up to the current level.</returns>
+    public float GetLevelDurationsUntilCurrent()
+    {
+        float totalDuration = 0f;
+
+        for (int i = 0; i < currentLevelIndex; i++)
+        {
+            foreach (LevelParameters levelParameters in levels[i].levelParameters)
+            {
+                totalDuration += levelParameters.levelDuration;
+            }
+        }
+
+        return totalDuration;
     }
 
     private void OnEnable()
@@ -64,6 +117,9 @@ public class LevelManager : MonoBehaviour
         LevelEvents.InvokeOnNewLevel(levelParameters);
     }
     
+    /// <summary>
+    /// Sets the start of the current level by getting the level parameters, invoking the OnNewLevel event, and starting the level timer.
+    /// </summary>
     private void SetLevelStart()
     {
         LevelParameters levelParameters = this.GetLevelParameters(currentLevelIndex, currentLevelParamIndex);
@@ -79,9 +135,12 @@ public class LevelManager : MonoBehaviour
         LevelEvents.InvokeOnPrepNewLevelEvent(levelParameters);
     }
 
+    /// <summary>
+    /// Starts the next level by updating the level indexes, setting the current level index in PlayerPrefs,
+    /// getting the level parameters, invoking the OnNewLevel event, and starting the level timer.
+    /// </summary>
     public void StartNextLevel()
     {
-        // Update levelIndexes
         (currentLevelIndex, currentLevelParamIndex) = this.FindNextLevelParametersPos(currentLevelIndex, currentLevelParamIndex);
         PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex);
 
@@ -92,7 +151,7 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    ///  Finds and return LevelParameter for given index.
+    /// Finds and return LevelParameter for given index.
     /// </summary>
     private LevelParameters GetLevelParameters(int levelIndex, int levelParamIndex)
     {

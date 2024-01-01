@@ -9,13 +9,10 @@ public class CameraFollow : MonoBehaviour
     public Vector3 offset;           // The offset from the player's position
     private GameObject targetObj;
 
-    
-
     void Update()
     {
         if (target != null)
         {
-            
             // Calculate the desired position for the cameraa
             Vector3 desiredPosition = target.position + offset;
 

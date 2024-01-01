@@ -19,7 +19,7 @@ public class BackgroundColorShifter : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(ShiftBackgroundColor());
+        //StartCoroutine(ShiftBackgroundColor());
     }
 
     private IEnumerator ShiftBackgroundColor()

@@ -143,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!movingUpwards) 
             {
-                SoundManager.Instance.PlaySoundUp();
+                //SoundManager.Instance.PlaySoundUp();
             }
             movingUpwards = true;
         }
@@ -151,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (movingUpwards) 
             {
-                SoundManager.Instance.PlaySoundDown();
+                //SoundManager.Instance.PlaySoundDown();
             }
             movingUpwards = false;
         }
