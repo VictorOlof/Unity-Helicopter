@@ -4390,7 +4390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4716981, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5255,29 +5255,16 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2132427240687901157, guid: a5fc3dbf38bec41299c28b353643e35b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1726489480}
+      addedObject: {fileID: 1726489487}
     - targetCorrespondingSourceObject: {fileID: 2132427240687901157, guid: a5fc3dbf38bec41299c28b353643e35b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1726489487}
+      addedObject: {fileID: 1726489497}
   m_SourcePrefab: {fileID: 100100000, guid: a5fc3dbf38bec41299c28b353643e35b, type: 3}
 --- !u!1 &1726489479 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2132427240687901157, guid: a5fc3dbf38bec41299c28b353643e35b, type: 3}
   m_PrefabInstance: {fileID: 1726489478}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1726489480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1726489479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf54d038a27ff4f5a8de93a3a55c743e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shiftTime: 2
 --- !u!114 &1726489487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5293,6 +5280,23 @@ MonoBehaviour:
   target: {fileID: 656802768}
   smoothSpeed: 0.12
   offset: {x: 14, y: 0, z: 0}
+--- !u!114 &1726489497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726489479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40f10908475564e92aa46ea901865c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startColor: {r: 1, g: 0.99867064, b: 0, a: 1}
+  endColor: {r: 1, g: 0.56404436, b: 0, a: 1}
+  oldStartColor: {r: 0, g: 0, b: 0, a: 0}
+  fadeSpeed: 1
+  fadeTransitionTime: 1
 --- !u!1 &1758978226
 GameObject:
   m_ObjectHideFlags: 0
@@ -6138,6 +6142,9 @@ MonoBehaviour:
   - levelParameters:
     - {fileID: 11400000, guid: 85ef6a177af15461bae8440d528b6592, type: 2}
     - {fileID: 11400000, guid: a8c979da693bd4f28bd6b9c458054a0c, type: 2}
+    - {fileID: 11400000, guid: aa3721ff4c185475e8e238ceba34be36, type: 2}
+  - levelParameters:
+    - {fileID: 11400000, guid: 47c1dfc21ca444e01b1c44bc4448463d, type: 2}
     - {fileID: 11400000, guid: 831851ce5627c4fde89f6dc02e7883e8, type: 2}
   currentLevelIndex: 0
   currentLevelParamIndex: 0

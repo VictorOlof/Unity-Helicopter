@@ -13,10 +13,10 @@ public class Square : MonoBehaviour
 
     void OnEnable()
     {
-        string color;
+        Color color;
 
         if (GameState.PlayerState == PlayerStates.WaitingToStart || 
-            LevelEvents.EventType.NewLevelEvent == LevelEvents.LatestEventType)
+            LevelEvents.LatestEventType == LevelEvents.EventType.NewLevelEvent)
         {
             LevelParameters levelParameters = LevelManager.Instance.GetCurrentLevelParameters();
 
@@ -36,26 +36,27 @@ public class Square : MonoBehaviour
     {
         LevelParameters levelParameters1 = LevelManager.Instance.GetCurrentLevelParameters();
 
-        string color = levelParameters1.squareColor;
+        Color color = levelParameters1.squareColor;
         FadeToColor(0.5f, color);
     }
 
     private void UpdateToBlackColor()
     {
-        FadeToColor(0.15f, "black");
+        FadeToColor(0.15f, Color.black);
     }
 
-    void FadeToColor(float time, string color)
+    void FadeToColor(float time, Color color)
     {
+        Debug.Log("collr");
         StartCoroutine(FadeToColorCoroutine(time, color));
     }
 
-    IEnumerator FadeToColorCoroutine(float time, string color)
+    IEnumerator FadeToColorCoroutine(float time, Color color)
     {
         float elapsedTime = 0;
         Color startingColor = renderer.color;
         Color endingColor = Color.black;
-
+        /*
         switch (color)
         {
             case "black":
@@ -104,6 +105,7 @@ public class Square : MonoBehaviour
                 endingColor = Color.black;
                 break;
         }
+        */
 
         while (elapsedTime < time)
         {
@@ -114,8 +116,11 @@ public class Square : MonoBehaviour
         renderer.color = endingColor;
     }
 
-    void ChangeColor(string color)
+    void ChangeColor(Color color)
     {
+        renderer.color = color;
+
+        /*
         switch (color)
         {
             case "black":
@@ -164,6 +169,7 @@ public class Square : MonoBehaviour
                 renderer.color = Color.black;
                 break;
         }
+        */
     }
     
 }

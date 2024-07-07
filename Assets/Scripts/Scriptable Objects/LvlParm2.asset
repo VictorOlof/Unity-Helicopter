@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34ca0a8686814483ca0361d369092587, type: 3}
   m_Name: LvlParm2
   m_EditorClassIdentifier: 
-  playerSpeed: 12
+  playerSpeed: 15
   levelDuration: 5
-  maxHeightChange: 2
-  tunnelGapHeight: 16
-  tunnelGapHeightRandomness: 2
-  squareColor: yellow
-  levelName: Level 1.1
+  maxHeightChange: 3
+  tunnelGapHeight: 7
+  tunnelGapHeightRandomness: 0
+  squareColor: {r: 1, g: 1, b: 1, a: 1}
+  levelName: 
+  bgColor1: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
+  bgColor2: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
+  bgColorFadeSpeed: 4

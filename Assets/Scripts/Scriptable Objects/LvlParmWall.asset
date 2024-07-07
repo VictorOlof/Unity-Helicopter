@@ -17,5 +17,8 @@ MonoBehaviour:
   maxHeightChange: 0
   tunnelGapHeight: 0
   tunnelGapHeightRandomness: 0
-  squareColor: blue
-  levelName: Wall
+  squareColor: {r: 0.76, g: 0.76, b: 0.76, a: 1}
+  levelName: 
+  bgColor1: {r: 1, g: 1, b: 1, a: 1}
+  bgColor2: {r: 0.35, g: 0.35, b: 0.35, a: 1}
+  bgColorFadeSpeed: 2
