@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Square : MonoBehaviour
 {
-    SpriteRenderer renderer;
+    private SpriteRenderer renderer;
+    private Coroutine randomColorCoroutine;
+    private Color originalColor;
+    private Color[] colors;
 
     void Awake()
     {
@@ -13,29 +16,42 @@ public class Square : MonoBehaviour
 
     void OnEnable()
     {
-        Color color;
-
+        LevelParameters levelParameters;
         if (GameState.PlayerState == PlayerStates.WaitingToStart || 
             LevelEvents.LatestEventType == LevelEvents.EventType.NewLevelEvent)
         {
-            LevelParameters levelParameters = LevelManager.Instance.GetCurrentLevelParameters();
-
-            color = levelParameters.squareColor;
-            ChangeColor(color);
+            levelParameters = LevelManager.Instance.GetCurrentLevelParameters();
         }
         else //(LevelEvents.LatestEventType == LevelEvents.EventType.PrepNewLevelEvent)
         {
-            LevelParameters levelParameters = LevelManager.Instance.GetNextLevelParameters();
+            levelParameters = LevelManager.Instance.GetNextLevelParameters();
+        }
 
-            color = levelParameters.squareColor;
-            ChangeColor(color);
+        originalColor = renderer.color;
+        colors = new Color[] { levelParameters.squareColor1, levelParameters.squareColor2 };
+
+        if (levelParameters.randomColor)
+        {
+            if (randomColorCoroutine != null)
+            {
+                StopCoroutine(randomColorCoroutine);
+            }
+            randomColorCoroutine = StartCoroutine(RandomColorCoroutine());
+        }
+        else
+        {
+            ChangeColor(levelParameters.squareColor);
         }
     }
 
-    private void UpdateColorFromCurrentLevelParam(LevelParameters levelParameters) //LevelParameters levelParameters)
+    void ChangeColor(Color color)
+    {
+        renderer.color = color;
+    }
+
+    private void UpdateColorFromCurrentLevelParam(LevelParameters levelParameters)
     {
         LevelParameters levelParameters1 = LevelManager.Instance.GetCurrentLevelParameters();
-
         Color color = levelParameters1.squareColor;
         FadeToColor(0.5f, color);
     }
@@ -47,7 +63,6 @@ public class Square : MonoBehaviour
 
     void FadeToColor(float time, Color color)
     {
-        Debug.Log("collr");
         StartCoroutine(FadeToColorCoroutine(time, color));
     }
 
@@ -55,121 +70,31 @@ public class Square : MonoBehaviour
     {
         float elapsedTime = 0;
         Color startingColor = renderer.color;
-        Color endingColor = Color.black;
-        /*
-        switch (color)
-        {
-            case "black":
-                endingColor = Color.black;
-                break;
-            case "white":
-                endingColor = Color.white;
-                break;
-            case "red":
-                endingColor = Color.red;
-                break;
-            case "green":
-                endingColor = Color.green;
-                break;
-            case "blue":
-                endingColor = Color.blue;
-                break;
-            case "yellow":
-                endingColor = Color.yellow;
-                break;
-            case "cyan":
-                endingColor = Color.cyan;
-                break;
-            case "magenta":
-                endingColor = Color.magenta;
-                break;
-            case "orange":
-                endingColor = new Color(171, 79, 0, 0);
-                break;
-            case "purple":
-                endingColor = new Color(128, 0, 128, 0);
-                break;
-            case "pink":
-                endingColor = new Color(255, 192, 203, 0);
-                break;
-            case "brown":
-                endingColor = new Color(165, 42, 42, 0);
-                break;
-            case "grey":
-                endingColor = new Color(128, 128, 128, 0);
-                break;
-            case "transparent":
-                endingColor = new Color(0, 0, 0, 0);
-                break;
-            default:
-                endingColor = Color.black;
-                break;
-        }
-        */
-
         while (elapsedTime < time)
         {
-            renderer.color = Color.Lerp(startingColor, endingColor, (elapsedTime / time));
+            renderer.color = Color.Lerp(startingColor, color, (elapsedTime / time));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        renderer.color = endingColor;
-    }
-
-    void ChangeColor(Color color)
-    {
         renderer.color = color;
-
-        /*
-        switch (color)
-        {
-            case "black":
-                renderer.color = Color.black;
-                break;
-            case "white":
-                renderer.color = Color.white;
-                break;
-            case "red":
-                renderer.color = Color.red;
-                break;
-            case "green":
-                renderer.color = Color.green;
-                break;
-            case "blue":
-                renderer.color = Color.blue;
-                break;
-            case "yellow":
-                renderer.color = Color.yellow;
-                break;
-            case "cyan":
-                renderer.color = Color.cyan;
-                break;
-            case "magenta":
-                renderer.color = Color.magenta;
-                break;
-            case "orange":
-                renderer.color = new Color(171, 79, 0, 0);
-                break;
-            case "purple":
-                renderer.color = new Color(128, 0, 128, 0);
-                break;
-            case "pink":
-                renderer.color = new Color(255, 192, 203, 0);
-                break;
-            case "brown":
-                renderer.color = new Color(165, 42, 42, 0);
-                break;
-            case "grey":
-                renderer.color = new Color(128, 128, 128, 0);
-                break;
-            case "transparent":
-                renderer.color = new Color(0, 0, 0, 0);
-                break;
-            default:
-                renderer.color = Color.black;
-                break;
-        }
-        */
     }
-    
+
+    IEnumerator RandomColorCoroutine()
+    {
+        while (true)
+        {
+            if (Random.value < 1f) // 50% chance
+            {
+                Color targetColor = colors[Random.Range(0, colors.Length)];
+                yield return FadeToColorCoroutine(1.0f, targetColor); // Fade to random color in 1 second
+                yield return new WaitForSeconds(1.0f);  // Hold the random color for 1 second
+                yield return FadeToColorCoroutine(1.0f, originalColor); // Fade back to the original color in 1 second
+                yield return new WaitForSeconds(1.0f);  // Hold the original color for 1 second
+            }
+            else
+            {
+                yield return new WaitForSeconds(1.0f); // Wait for 1 second before checking again
+            }
+        }
+    }
 }

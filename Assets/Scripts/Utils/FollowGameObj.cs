@@ -6,6 +6,7 @@ public class FollowGameObj : MonoBehaviour
 {
     //public static PlayerStates PlayerState = PlayerStates.WaitingToStart;
     public GameObject gameObjectToFollow;
+    public int offsetX, offsetY;
 
     /*
     void Awake()
@@ -25,7 +26,7 @@ public class FollowGameObj : MonoBehaviour
         if (gameObjectToFollow != null)
         {
             // todo change Zpos? better solution?
-            transform.position = new Vector3(gameObjectToFollow.transform.position.x, gameObjectToFollow.transform.position.y, 11);
+            transform.position = new Vector3(gameObjectToFollow.transform.position.x + offsetX, gameObjectToFollow.transform.position.y + offsetY, 11);
             //transform.transform.SetParent(null);
         }
         

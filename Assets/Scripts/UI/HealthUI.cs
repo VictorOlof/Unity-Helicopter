@@ -1,35 +1,30 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic; // Add this line
 
 public class HealthUI : MonoBehaviour
 {
     public HealthSO health;
     public Image[] hearts;
 
-    void Awake()
-    {
-        GameState.OnDeadState += UpdateHealthUI;
-        UpdateHealthUI();
-    }
-
-    private void OnDestroy() 
-    {
-        GameState.OnDeadState -= UpdateHealthUI;
-    }
 
     private void OnEnable()
     {
-        GameState.OnPlayState += ActivateAnimOnCurrentHeart;
-        GameState.OnWaitingToStart += DisableAllAnimOnHearts;
+        GameState.OnWaitingToStart += UpdateHealthUI;
+        //GameState.OnPlayState += ActivateAnimOnCurrentHeart;
+        GameState.OnWaitingToStart += ActivateAnimOnCurrentHeart;
         GameState.OnDeadState += DisableAllAnimOnHearts;
+        GameState.OnDeadState += DisableCurrentHeart;
     }
 
     private void OnDisable()
     {
-        GameState.OnPlayState -= ActivateAnimOnCurrentHeart;
-        GameState.OnWaitingToStart -= DisableAllAnimOnHearts;
+        GameState.OnWaitingToStart -= UpdateHealthUI;
+        //GameState.OnPlayState -= ActivateAnimOnCurrentHeart;
+        GameState.OnWaitingToStart -= ActivateAnimOnCurrentHeart;
         GameState.OnDeadState -= DisableAllAnimOnHearts;
+        GameState.OnDeadState -= DisableCurrentHeart;
     }
 
     /*
@@ -46,6 +41,12 @@ public class HealthUI : MonoBehaviour
         }
     }
     */
+
+    private void DisableCurrentHeart()
+    {
+        hearts[hearts.Length - 1].enabled = false;
+        RemoveLastHeart();
+    }
 
     private void DisableAllAnimOnHearts()
     {
@@ -93,10 +94,29 @@ public class HealthUI : MonoBehaviour
             else 
             {
                 hearts[i].enabled = false;
+                
             }
 
             
         }
+    }
+
+    public void RemoveLastHeart()
+    {
+        if (hearts.Length == 0)
+        {
+            Debug.LogWarning("Hearts array is already empty.");
+            return;
+        }
+
+        // Convert the array to a list
+        List<Image> heartsList = new List<Image>(hearts);
+
+        // Remove the last element
+        heartsList.RemoveAt(heartsList.Count - 1);
+
+        // Convert the list back to an array
+        hearts = heartsList.ToArray();
     }
 }
 

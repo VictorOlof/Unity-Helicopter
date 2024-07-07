@@ -16,6 +16,9 @@ public class LevelParameters : ScriptableObject
 
     // Squares
     public Color squareColor = new Color(0.76f, 0.76f, 0.76f); //Color.black;
+    public bool randomColor = false;
+    public Color squareColor1 = Color.black;
+    public Color squareColor2 = Color.white;
 
     // Info
     public string levelName = "Level 0";
