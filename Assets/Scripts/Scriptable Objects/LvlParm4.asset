@@ -22,3 +22,4 @@ MonoBehaviour:
   bgColor1: {r: 0, g: 0, b: 0, a: 1}
   bgColor2: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 1}
   bgColorFadeSpeed: 2
+  levelMusic: {fileID: 8300000, guid: eeac0b0feefdb4b05b0be08b27141817, type: 3}

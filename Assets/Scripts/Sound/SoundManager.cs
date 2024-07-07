@@ -22,6 +22,26 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        LevelEvents.OnNewLevel += PlayLevelMusic;
+    }
+
+    private void OnDisable()
+    {
+        LevelEvents.OnNewLevel -= PlayLevelMusic;
+    }
+
+    private void PlayLevelMusic(LevelParameters levelParameters)
+    {
+        if (levelParameters.levelMusic && levelParameters.levelMusic != _musicSource.clip)
+        {
+            _musicSource.Stop();
+            _musicSource.clip = levelParameters.levelMusic;
+            _musicSource.Play();
+        }
+    }
+
     public void PlaySound(AudioClip clip)
     {
         _effectsSource.Stop();

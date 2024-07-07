@@ -24,4 +24,7 @@ public class LevelParameters : ScriptableObject
     public Color bgColor1 = new Color(0.76f, 0.76f, 0.76f); //Color.black;
     public Color bgColor2 = new Color(0.35f, 0.35f, 0.35f); //Color.white;
     public float bgColorFadeSpeed = 2f;
+
+    // Music
+    public AudioClip levelMusic;
 }

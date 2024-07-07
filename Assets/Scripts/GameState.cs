@@ -14,10 +14,10 @@ public static class GameState
     public static PlayerStates PlayerState = PlayerStates.WaitingToStart;
 
     public delegate void WaitStateHandler();
-    public static event WaitStateHandler OnWaitingToStartStateEvent;
+    public static event WaitStateHandler OnWaitingToStart;
     public static void TriggerWaitingToStartStateEvent() 
     {
-        OnWaitingToStartStateEvent?.Invoke();
+        OnWaitingToStart?.Invoke();
     }
     
     public delegate void PlayStateHandler();

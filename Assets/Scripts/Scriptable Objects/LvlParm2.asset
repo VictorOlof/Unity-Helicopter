@@ -18,7 +18,8 @@ MonoBehaviour:
   tunnelGapHeight: 7
   tunnelGapHeightRandomness: 0
   squareColor: {r: 1, g: 1, b: 1, a: 1}
-  levelName: 
+  levelName: 1.1
   bgColor1: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
   bgColor2: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
   bgColorFadeSpeed: 4
+  levelMusic: {fileID: 8300000, guid: eeac0b0feefdb4b05b0be08b27141817, type: 3}
