@@ -1560,7 +1560,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 804d35eaf3b6949f6bcc55c4c259f718, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.101
+  m_Volume: 0.27
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -6461,11 +6461,10 @@ MonoBehaviour:
   levels:
   - levelParameters:
     - {fileID: 11400000, guid: 85ef6a177af15461bae8440d528b6592, type: 2}
-    - {fileID: 11400000, guid: a8c979da693bd4f28bd6b9c458054a0c, type: 2}
-    - {fileID: 11400000, guid: aa3721ff4c185475e8e238ceba34be36, type: 2}
-  - levelParameters:
     - {fileID: 11400000, guid: 47c1dfc21ca444e01b1c44bc4448463d, type: 2}
-    - {fileID: 11400000, guid: 831851ce5627c4fde89f6dc02e7883e8, type: 2}
+    - {fileID: 11400000, guid: a8c979da693bd4f28bd6b9c458054a0c, type: 2}
+    - {fileID: 11400000, guid: 47c1dfc21ca444e01b1c44bc4448463d, type: 2}
+    - {fileID: 11400000, guid: aa3721ff4c185475e8e238ceba34be36, type: 2}
   currentLevelIndex: 0
   currentLevelParamIndex: 0
   levelTimer: {fileID: 1340080138}

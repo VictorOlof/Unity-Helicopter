@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: LvlParm2
   m_EditorClassIdentifier: 
   playerSpeed: 15
-  levelDuration: 15
+  levelDuration: 5
   maxHeightChange: 3
   tunnelGapHeight: 7
   tunnelGapHeightRandomness: 0
-  squareColor: {r: 0.98043555, g: 0.990566, b: 0, a: 1}
+  squareColor: {r: 1, g: 0, b: 0, a: 1}
   randomColor: 1
-  squareColor1: {r: 0, g: 0, b: 0, a: 1}
-  squareColor2: {r: 1, g: 1, b: 1, a: 1}
-  levelName: 1.1
-  bgColor1: {r: 0, g: 0, b: 0, a: 1}
-  bgColor2: {r: 1, g: 1, b: 1, a: 1}
-  bgColorFadeSpeed: 1
-  levelMusic: {fileID: 8300000, guid: eeac0b0feefdb4b05b0be08b27141817, type: 3}
+  squareColor1: {r: 1, g: 0, b: 0, a: 1}
+  squareColor2: {r: 1, g: 0.3066038, b: 0.3066038, a: 1}
+  levelName: 
+  bgColor1: {r: 0.7735849, g: 0.1788003, b: 0.1788003, a: 1}
+  bgColor2: {r: 0.4339623, g: 0.13714845, b: 0.13714845, a: 1}
+  bgColorFadeSpeed: 1.5
+  levelMusic: {fileID: 8300000, guid: 804d35eaf3b6949f6bcc55c4c259f718, type: 3}

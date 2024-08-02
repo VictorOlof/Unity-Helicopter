@@ -34,7 +34,7 @@ public class SoundManager : MonoBehaviour
 
     private void PlayLevelMusic(LevelParameters levelParameters)
     {
-        if (levelParameters.levelMusic) // && levelParameters.levelMusic != _musicSource.clip)
+        if (levelParameters.levelMusic && levelParameters.levelMusic != _musicSource.clip)
         {
             _musicSource.Stop();
             _musicSource.clip = levelParameters.levelMusic;

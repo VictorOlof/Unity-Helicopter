@@ -27,6 +27,8 @@ public class Square : MonoBehaviour
             levelParameters = LevelManager.Instance.GetNextLevelParameters();
         }
 
+        renderer.color = levelParameters.squareColor;
+
         originalColor = renderer.color;
         colors = new Color[] { levelParameters.squareColor1, levelParameters.squareColor2 };
 
@@ -83,13 +85,13 @@ public class Square : MonoBehaviour
     {
         while (true)
         {
-            if (Random.value < 1f) // 50% chance
+            if (Random.value < 0.3f) // 50% chance
             {
                 Color targetColor = colors[Random.Range(0, colors.Length)];
-                yield return FadeToColorCoroutine(1.0f, targetColor); // Fade to random color in 1 second
-                yield return new WaitForSeconds(1.0f);  // Hold the random color for 1 second
-                yield return FadeToColorCoroutine(1.0f, originalColor); // Fade back to the original color in 1 second
-                yield return new WaitForSeconds(1.0f);  // Hold the original color for 1 second
+                yield return FadeToColorCoroutine(0.3f, targetColor); // Fade to random color in 1 second
+                yield return new WaitForSeconds(0.3f);  // Hold the random color for 1 second
+                yield return FadeToColorCoroutine(0.3f, originalColor); // Fade back to the original color in 1 second
+                yield return new WaitForSeconds(0.3f);  // Hold the original color for 1 second
             }
             else
             {
