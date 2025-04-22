@@ -10,6 +10,7 @@ public class CameraTest : MonoBehaviour
 
     public Vector3 offset; // The initial offset between the camera and the player
 
+    /*
     void Awake()
     {
         GameState.OnDeadState += ReloadScene;
@@ -29,7 +30,8 @@ public class CameraTest : MonoBehaviour
     {
         Invoke("LoadNewGameScene", (float)2);
 	}
-
+    */
+    
     private void Start()
     {
         // Calculate the initial offset between the camera and the player
